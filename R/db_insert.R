@@ -6,7 +6,7 @@
 #' \code{db_insert} will not overwrite data or include a "row.names" variable by
 #' default. 
 #' 
-#' @seealso \code{\link{DBI::dbWriteTable}}, \code{\link{db_list_variables}},
+#' @seealso \code{\link{dbWriteTable}}, \code{\link{db_list_variables}},
 #' \code{\link{db_table_names}}
 #' 
 #' @author Stuart K. Grange
