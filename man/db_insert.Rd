@@ -36,7 +36,7 @@ default.
 Stuart K. Grange
 }
 \seealso{
-\code{\link{DBI::dbWriteTable}}, \code{\link{db_list_variables}},
+\code{\link{dbWriteTable}}, \code{\link{db_list_variables}},
 \code{\link{db_table_names}}
 }
 

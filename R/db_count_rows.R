@@ -10,6 +10,9 @@
 #' @param table Table name in \code{con}. If \code{table} is unknown, all tables
 #' in \code{con} will be queried. 
 #' 
+#' @param estimate Only for PostgreSQL, should the table count estimate be used? 
+#' Default is \code{FALSE}. 
+#' 
 #' @param progress Type of progress bar to display. Default is \code{"none"}. 
 #' 
 #' @export
@@ -19,7 +22,8 @@ db_count_rows <- function(con, table = NA, estimate = FALSE, progress = "none") 
   if (is.na(table[1])) table <- db_list_tables(con)
   
   # Only some tables
-  df <- plyr::ldply(table, row_counter, con, .progress = progress)
+  df <- plyr::ldply(table, function(x) db_row_counter(con, x, estimate),
+                    .progress = progress)
   
   # No factors
   df <- factor_coerce(df)
@@ -39,14 +43,10 @@ db_row_counter <- function(con, table, estimate) {
   if (estimate) {
     
     # Will only work for postgres
-    sql <- stringr::str_c("SELECT reltuples::bigint AS estimate 
+    sql <- stringr::str_c("SELECT reltuples::bigint AS row_count 
                            FROM pg_class 
                            WHERE relname = '", table, "'")
-    
-    
-    db_get(con, "'observations'")
-    
-    
+
   } else {
     
     # Create statement, use text so 32 bit integers are not a limitation

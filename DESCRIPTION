@@ -17,7 +17,6 @@ Imports:
     RSQLite,
     RMySQL,
     RPostgreSQL,
-    testthat,
-    databaser
+    testthat
 Suggests:
 RoxygenNote: 5.0.1
