@@ -13,7 +13,7 @@
 #' @param progress Type of progress bar to display. Default is \code{"none"}. 
 #' 
 #' @export
-db_count_rows <- function(con, table = NA, progress = "none") {
+db_count_rows <- function(con, table = NA, estimate = FALSE, progress = "none") {
   
   # If no table is selected, do them all
   if (is.na(table[1])) table <- db_list_tables(con)
@@ -34,11 +34,26 @@ db_count_rows <- function(con, table = NA, progress = "none") {
 
 
 # Function to get the row counts
-row_counter <- function(table, con) {
+db_row_counter <- function(con, table, estimate) {
   
-  # Create statement, use text so 32 bit integers are not a limitation
-  sql <- stringr::str_c("SELECT CAST(COUNT(*) AS TEXT) AS row_count 
+  if (estimate) {
+    
+    # Will only work for postgres
+    sql <- stringr::str_c("SELECT reltuples::bigint AS estimate 
+                           FROM pg_class 
+                           WHERE relname = '", table, "'")
+    
+    
+    db_get(con, "'observations'")
+    
+    
+  } else {
+    
+    # Create statement, use text so 32 bit integers are not a limitation
+    sql <- stringr::str_c("SELECT CAST(COUNT(*) AS TEXT) AS row_count 
                         FROM ", table)
+    
+  }
   
   # Use statement
   df <- tryCatch({
