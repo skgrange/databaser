@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/skgrange/databaser.svg?branch=master)](https://travis-ci.org/skgrange/databaser)
 
-**databaser** is an R package which extends [**DBI**](https://github.com/rstats-db/DBI), [**RSQLite**](https://github.com/rstats-db/RSQLite), [**RMySQL**](https://github.com/rstats-db/RMySQL), and [**RPostgreSQL**](https://code.google.com/archive/p/rpostgresql/) packages and keeps things consistent with functions starting with `db_`. **databaser** contains many simple wrappers which are sometimes undesirable, but they are included for consistency. 
+**databaser** is an R package which extends [**DBI**](https://github.com/rstats-db/DBI), [**RSQLite**](https://github.com/rstats-db/RSQLite), [**RMySQL**](https://github.com/rstats-db/RMySQL), and [**RPostgreSQL**](https://code.google.com/archive/p/rpostgresql/). **databaser**  keeps things consistent with functions starting with `db_`. **databaser** contains many simple wrappers which are sometimes undesirable, but they are included for consistency. 
 
   - Functions include: 
     - `db_connect`
@@ -23,5 +23,6 @@
     - `db_size`
     - `db_version`
     - `read_sql`
+    - and many more...
 
 **databaser** started off life within the [**threadr**](https://github.com/skgrange/threadr) package. 

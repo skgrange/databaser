@@ -2,17 +2,23 @@
 % Please edit documentation in R/read_sql.R
 \name{read_sql}
 \alias{read_sql}
-\title{Function to read SQL script and store statments as a vector.}
+\title{Function to read a SQL script and store statments as a vector.}
 \usage{
 read_sql(file)
+}
+\arguments{
+\item{file}{File name of SQL script.}
 }
 \value{
 Character vector.
 }
 \description{
-Mutli-line commenting is not correctly parsed yet.
+To-do: Mutli-line commenting is not correctly parsed yet, fix.
 }
 \author{
 Stuart K. Grange
+}
+\seealso{
+\code{\link{db_send}}, \code{\link{db_get}}
 }
 

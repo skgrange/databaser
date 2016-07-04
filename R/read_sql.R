@@ -1,8 +1,12 @@
-#' Function to read SQL script and store statments as a vector. 
+#' Function to read a SQL script and store statments as a vector. 
 #' 
-#' Mutli-line commenting is not correctly parsed yet.
+#' To-do: Mutli-line commenting is not correctly parsed yet, fix. 
+#' 
+#' @seealso \code{\link{db_send}}, \code{\link{db_get}}
 #' 
 #' @author Stuart K. Grange
+#' 
+#' @param file File name of SQL script. 
 #' 
 #' @return Character vector. 
 #' 
@@ -17,7 +21,7 @@ read_sql <- function(file) {
   
   # Clean
   sql <- stringr::str_c(sql, collapse = "")
-  sql <- str_trim_many_spaces(sql)
+  sql <- threadr::str_trim_many_spaces(sql)
   
   # Split based on ;
   sql <- unlist(stringr::str_split(sql, ";"))
