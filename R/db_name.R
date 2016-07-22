@@ -15,7 +15,18 @@ db_name <- function(con) {
   if (grepl("mysql", class(con), ignore.case = TRUE))
     x <- db_get(con, "SELECT DATABASE()")[, 1]
   
-  # REturn
+  # SQLite
+  if (grepl("sqlite", class(con), ignore.case = TRUE)) {
+    
+    # Get file name
+    x <- basename(con@dbname)
+    
+    # Drop file extension, could be unreliable
+    # x <- stringr::str_split_fixed(x, "\\.", 2)[, 1]
+    
+  }
+  
+  # Return
   x 
   
 }
