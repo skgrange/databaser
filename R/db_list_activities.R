@@ -18,7 +18,11 @@ db_list_activities <- function(con, json = FALSE) {
     )
     
   }
-
+  
+  # Others, at the moment
+  if (grepl("sqlite|mysql", class(con), ignore.case = TRUE))
+    stop("Not implemented.", call. = FALSE)
+  
   # Make a json object
   if (json) df <- jsonlite::toJSON(df, pretty = TRUE)
   
