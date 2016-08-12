@@ -1,13 +1,11 @@
-#' Function to insert a data frame into/as a database table.
+#' Function to insert a data frame into/as a database table (R data frame to 
+#' SQL table). 
 #'
-#' \code{db_insert} is a wrapper for \code{\link{DBI::dbWriteTable}}, but uses 
-#' different defaults and has a few enhancements which can be helpful. 
-#'
-#' \code{db_insert} will not overwrite data or include a "row.names" variable by
-#' default. 
+#' \code{db_insert} is a wrapper for \code{\link{dbWriteTable}}, but uses 
+#' different defaults. \code{db_insert} will not replace data by default. 
 #' 
 #' @seealso \code{\link{dbWriteTable}}, \code{\link{db_list_variables}},
-#' \code{\link{db_table_names}}
+#' \code{\link{db_table_names}}, \code{\link{db_arrange_variables}}
 #' 
 #' @author Stuart K. Grange
 #' 
@@ -17,31 +15,29 @@
 #'
 #' @param df Data frame to be inserted into \code{con}.
 #'
-#' @param append Should the table be appended? Default is \code{TRUE}. 
-#'
-#' @param overwrite Should the table be overwritten? Default is \code{FALSE}. 
-#'
-#' @param rows Should the inserted data include row names? Default is 
-#' \code{FALSE}. 
-#'
-#' @param fill Should \code{df} be forced to have the same columns and order as
-#' \code{table}? 
+#' @param replace Should the database table be replaced? Default is \code{FALSE}. 
+#' Be cautious using this argument because it will drop the database table if it
+#' exists. 
 #'
 #' @export
-db_insert <- function(con, table, df, append = TRUE, overwrite = FALSE,
-                      rows = FALSE, fill = FALSE) {
-                         
-  # Catch dplyr's data table
-  df <- base_df(df)
+db_insert <- function(con, table, df, replace = FALSE) {
   
-  # Reorder and fill the columns
-  if (fill) df <- plyr::rbind.fill(db_table_names(con, table), df)
+  # Switch replace
+  if (replace) {
+    
+    append <- FALSE
+    overwrite <- TRUE
+    
+  }
+  
+  # Catch dplyr's data table
+  df <- threadr::base_df(df)
   
   # Write data frame to database
   # Do not display cat output
   quiet(
     DBI::dbWriteTable(con, table, df, append = append, overwrite = overwrite, 
-                      row.names = rows)
+                      row.names = FALSE)
   )
   
   # No return

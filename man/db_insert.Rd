@@ -2,10 +2,10 @@
 % Please edit documentation in R/db_insert.R
 \name{db_insert}
 \alias{db_insert}
-\title{Function to insert a data frame into/as a database table.}
+\title{Function to insert a data frame into/as a database table (R data frame to 
+SQL table).}
 \usage{
-db_insert(con, table, df, append = TRUE, overwrite = FALSE, rows = FALSE,
-  fill = FALSE)
+db_insert(con, table, df, replace = FALSE)
 }
 \arguments{
 \item{con}{Database connection.}
@@ -14,29 +14,19 @@ db_insert(con, table, df, append = TRUE, overwrite = FALSE, rows = FALSE,
 
 \item{df}{Data frame to be inserted into \code{con}.}
 
-\item{append}{Should the table be appended? Default is \code{TRUE}.}
-
-\item{overwrite}{Should the table be overwritten? Default is \code{FALSE}.}
-
-\item{rows}{Should the inserted data include row names? Default is 
-\code{FALSE}.}
-
-\item{fill}{Should \code{df} be forced to have the same columns and order as
-\code{table}?}
+\item{replace}{Should the database table be replaced? Default is \code{FALSE}. 
+Be cautious using this argument because it will drop the database table if it
+exists.}
 }
 \description{
-\code{db_insert} is a wrapper for \code{\link{DBI::dbWriteTable}}, but uses 
-different defaults and has a few enhancements which can be helpful.
-}
-\details{
-\code{db_insert} will not overwrite data or include a "row.names" variable by
-default.
+\code{db_insert} is a wrapper for \code{\link{dbWriteTable}}, but uses 
+different defaults. \code{db_insert} will not replace data by default.
 }
 \author{
 Stuart K. Grange
 }
 \seealso{
 \code{\link{dbWriteTable}}, \code{\link{db_list_variables}},
-\code{\link{db_table_names}}
+\code{\link{db_table_names}}, \code{\link{db_arrange_variables}}
 }
 
