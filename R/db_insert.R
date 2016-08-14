@@ -28,6 +28,11 @@ db_insert <- function(con, table, df, replace = FALSE) {
     append <- FALSE
     overwrite <- TRUE
     
+  } else {
+    
+    append <- TRUE
+    overwrite <- FALSE
+    
   }
   
   # Catch dplyr's data table
