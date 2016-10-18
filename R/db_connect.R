@@ -68,6 +68,7 @@ db_connect <- function(file, database, config = TRUE, foreign_keys = FALSE) {
     # Create connection based on driver type
     if (grepl("mysql", json$driver, ignore.case = TRUE)) {
       
+      # Connect
       con <- DBI::dbConnect(RMySQL::MySQL(), 
                             host = json$host, 
                             dbname = json$database_name,
@@ -78,11 +79,16 @@ db_connect <- function(file, database, config = TRUE, foreign_keys = FALSE) {
     
     if (grepl("postg", json$driver, ignore.case = TRUE)) {
       
+      # Connect
       con <- DBI::dbConnect(RPostgreSQL::PostgreSQL(), 
                             host = json$host, 
                             dbname = json$database_name,
                             user = json$user, 
                             password = json$password)
+      
+      # Also give application name
+      db_send(con, stringr::str_c("SET application_name = '", 
+                                  clean_r_version(), "'"))
       
     }
     
@@ -104,3 +110,20 @@ db_connect <- function(file, database, config = TRUE, foreign_keys = FALSE) {
 
 #' @export
 db_disconnect <- function(con) quiet(DBI::dbDisconnect(con))
+
+
+
+clean_r_version <- function() {
+  
+  list_version <- R.Version()
+  
+  version <- list_version$version.string
+  version <- stringr::str_replace_all(version, "\\s*\\([^\\)]+\\)", "")
+  version <- stringr::str_replace(version, "version ", "")
+  name <- list_version$nickname
+  
+  version <- stringr::str_c(version, name, sep = " - ")
+  
+  version
+  
+}
