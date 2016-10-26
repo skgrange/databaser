@@ -88,7 +88,7 @@ db_connect <- function(file, database, config = TRUE, foreign_keys = FALSE) {
       
       # Also give application name
       db_send(con, stringr::str_c("SET application_name = '", 
-                                  clean_r_version(), "'"))
+                                  postgres_application_name(), "'"))
       
     }
     
@@ -113,16 +113,19 @@ db_disconnect <- function(con) quiet(DBI::dbDisconnect(con))
 
 
 
-clean_r_version <- function() {
+postgres_application_name <- function() {
   
   list_version <- R.Version()
   
   version <- list_version$version.string
   version <- stringr::str_replace_all(version, "\\s*\\([^\\)]+\\)", "")
   version <- stringr::str_replace(version, "version ", "")
-  name <- list_version$nickname
   
-  version <- stringr::str_c(version, name, sep = " - ")
+  # name <- list_version$nickname
+  # version <- stringr::str_c(version, name, sep = " - ")
+  
+  # Add package name too
+  version <- stringr::str_c(version, " with RPostgreSQL")
   
   version
   
