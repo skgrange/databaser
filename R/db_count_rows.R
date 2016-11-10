@@ -26,10 +26,10 @@ db_count_rows <- function(con, table = NA, estimate = FALSE, progress = "none") 
                     .progress = progress)
   
   # No factors
-  df <- factor_coerce(df)
+  df <- threadr::factor_coerce(df)
   
   # Add separator
-  df$row_count <- str_thousands_separator(df$row_count)
+  df$row_count <- threadr::str_thousands_separator(df$row_count)
   
   # Return
   df
@@ -51,7 +51,7 @@ db_row_counter <- function(con, table, estimate) {
     
     # Create statement, use text so 32 bit integers are not a limitation
     sql <- stringr::str_c("SELECT CAST(COUNT(*) AS TEXT) AS row_count 
-                        FROM ", table)
+                           FROM ", table)
     
   }
   
@@ -62,12 +62,17 @@ db_row_counter <- function(con, table, estimate) {
     
   }, error = function(e) {
     
-    data.frame(row_count = NA)
+    data.frame(
+      row_count = NA
+    )
     
   })
 
   # Add table and order variables
-  df <- data.frame(table, row_count = df$row_count)
+  df <- data.frame(
+    table, 
+    row_count = df$row_count
+  )
   
   # Return
   df

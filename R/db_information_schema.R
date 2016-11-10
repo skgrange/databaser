@@ -10,8 +10,15 @@
 db_information_schema <- function(con) {
   
   # Postgres
-  if (grepl("postgres", class(con), ignore.case = TRUE))
+  if (grepl("postgres", class(con), ignore.case = TRUE)) {
+    
     df <- db_get(con, "SELECT * FROM INFORMATION_SCHEMA.COLUMNS")
+    
+  } else {
+    
+    stop("Database type not supported.", call. = FALSE)
+    
+  }
   
   # Return
   df
