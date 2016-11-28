@@ -53,6 +53,14 @@ db_row_counter <- function(con, table, estimate) {
     sql <- stringr::str_c("SELECT CAST(COUNT(*) AS TEXT) AS row_count 
                            FROM ", table)
     
+    # Do not use the cast function here
+    if (grepl("mysql", class(con)[1], ignore.case = TRUE)) {
+      
+      sql <- stringr::str_c("SELECT COUNT(*) AS row_count 
+                             FROM ", table)
+      
+    }
+      
   }
   
   # Use statement
@@ -63,7 +71,8 @@ db_row_counter <- function(con, table, estimate) {
   }, error = function(e) {
     
     data.frame(
-      row_count = NA
+      row_count = NA,
+      stringsAsFactors = FALSE
     )
     
   })
@@ -71,7 +80,8 @@ db_row_counter <- function(con, table, estimate) {
   # Add table and order variables
   df <- data.frame(
     table, 
-    row_count = df$row_count
+    row_count = df$row_count,
+    stringsAsFactors = FALSE
   )
   
   # Return

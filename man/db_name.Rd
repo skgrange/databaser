@@ -4,10 +4,13 @@
 \alias{db_name}
 \title{Function to get database name.}
 \usage{
-db_name(con)
+db_name(con, extension = TRUE)
 }
 \arguments{
 \item{con}{Database connection.}
+
+\item{extension}{For SQLite databases, should the database name include the
+file name extension?}
 }
 \description{
 Function to get database name.

@@ -3,9 +3,12 @@
 #' @author Stuart K. Grange
 #' 
 #' @param con Database connection. 
+#' 
+#' @param extension For SQLite databases, should the database name include the
+#' file name extension? 
 #'
 #' @export
-db_name <- function(con) {
+db_name <- function(con, extension = TRUE) {
   
   # Postgres
   if (grepl("postgres", class(con), ignore.case = TRUE))
@@ -22,7 +25,7 @@ db_name <- function(con) {
     x <- basename(con@dbname)
     
     # Drop file extension, could be unreliable
-    # x <- stringr::str_split_fixed(x, "\\.", 2)[, 1]
+    if (!extension) x <- stringr::str_split_fixed(x, "\\.", 2)[, 1]
     
   }
   
