@@ -15,7 +15,7 @@ db_size <- function(con, unit = "mb") {
   if (grepl("sqlite", class(con)[1], ignore.case = TRUE)) {
     
     file_name <- con@dbname
-    x <- file_size(file_name, unit = unit)
+    x <- threadr::file_size(file_name, unit = unit)
     
   }
   
