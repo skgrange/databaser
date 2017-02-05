@@ -1,10 +1,11 @@
 #' Function to kill a database process. 
 #' 
-#' Only PostgreSQL databases are supported currently. 
+#' Currently, only PostgreSQL databases are supported.  
 #'
 #' @author Stuart K. Grange
 #' 
 #' @param con Database connection. 
+#' 
 #' @param process Process ID to kill. Use \code{\link{db_list_activities}} to 
 #' find this integer. 
 #' 
@@ -18,7 +19,7 @@ db_kill_process <- function(con, process) {
     sql <- stringr::str_c("SELECT pg_cancel_backend(", process, ")")
     
     # Use
-    db_send(con, sql)
+    db_execute(con, sql)
     
   }
   

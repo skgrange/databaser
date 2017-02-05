@@ -34,4 +34,3 @@ data_entire_contents <- db_contents(con, limit = NA)
 \author{
 Stuart K. Grange
 }
-

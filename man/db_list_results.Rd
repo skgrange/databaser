@@ -12,4 +12,3 @@ db_list_results(con)
 \description{
 Function to list results for a database connection.
 }
-

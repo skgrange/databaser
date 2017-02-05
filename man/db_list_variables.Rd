@@ -14,4 +14,3 @@ db_list_variables(con, table)
 \description{
 \code{db_list_variables} is a wrapper for \code{DBI::dbListFields}.
 }
-

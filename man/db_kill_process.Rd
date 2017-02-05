@@ -13,9 +13,8 @@ db_kill_process(con, process)
 find this integer.}
 }
 \description{
-Only PostgreSQL databases are supported currently.
+Currently, only PostgreSQL databases are supported.
 }
 \author{
 Stuart K. Grange
 }
-

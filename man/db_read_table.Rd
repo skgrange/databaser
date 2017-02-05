@@ -14,4 +14,3 @@ db_read_table(con, table)
 \description{
 \code{db_read_table} is a wrapper for \code{DBI::dbReadTable}.
 }
-

@@ -12,4 +12,3 @@ db_commit(con)
 \description{
 Function to commit transactions for a database connection.
 }
-

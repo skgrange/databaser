@@ -18,4 +18,3 @@ the `pg_database` table is queried.
 \author{
 Stuart K. Grange
 }
-

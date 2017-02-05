@@ -23,7 +23,7 @@ db_vacuum <- function(con, table) {
   
   # PostgreSQL databases
   if (grepl("postgresql", class(con), ignore.case = TRUE))
-    quiet(db_send(con, stringr::str_c("VACUUM (VERBOSE) ", table)))
+    quiet(db_execute(con, stringr::str_c("VACUUM (VERBOSE) ", table)))
     
   # MySQL databases
   if (grepl("mysql", class(con), ignore.case = TRUE)) {
@@ -31,22 +31,14 @@ db_vacuum <- function(con, table) {
     # Catch the reserved verbs
     table <- stringr::str_c("`", table, "`")
     
-    quiet(db_send(con, stringr::str_c("OPTIMIZE TABLE ", table)))
-    
-    # Clear results
-    quiet(DBI::dbClearResult(DBI::dbListResults(con)[[1]]))
+    # Optimise
+    quiet(db_execute(con, stringr::str_c("OPTIMIZE TABLE ", table)))
     
   }
   
   # SQLite
-  if (grepl("sqlite", class(con), ignore.case = TRUE)) {
-    
-    quiet(db_send(con, "VACUUM"))
-    
-    # Clear results
-    quiet(DBI::dbClearResult(DBI::dbListResults(con)[[1]]))
-    
-  }
+  if (grepl("sqlite", class(con), ignore.case = TRUE))
+    quiet(db_execute(con, "VACUUM"))
     
   # No return
   

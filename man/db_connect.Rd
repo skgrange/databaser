@@ -64,4 +64,3 @@ con <- db_connect("../databases/air_quality_data.sqlite", config = FALSE)
 \author{
 Stuart K. Grange
 }
-

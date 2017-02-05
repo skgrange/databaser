@@ -12,4 +12,3 @@ Function to build SQL UPDATE statements.
 \author{
 Stuart K. Grange
 }
-

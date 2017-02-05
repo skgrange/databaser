@@ -87,8 +87,8 @@ db_connect <- function(file, database, config = TRUE, foreign_keys = FALSE) {
                             password = json$password)
       
       # Also give application name
-      db_send(con, stringr::str_c("SET application_name = '", 
-                                  postgres_application_name(), "'"))
+      db_execute(con, stringr::str_c("SET application_name = '", 
+                                     postgres_application_name(), "'"))
       
     }
     
@@ -98,7 +98,7 @@ db_connect <- function(file, database, config = TRUE, foreign_keys = FALSE) {
     con <- DBI::dbConnect(RSQLite::SQLite(), file)
     
     # Add support for foreign keys
-    if (foreign_keys) db_send(con, "PRAGMA foreign_keys = 1")
+    if (foreign_keys) db_execute(con, "PRAGMA foreign_keys = 1")
     
   }
   
@@ -115,8 +115,10 @@ db_disconnect <- function(con) quiet(DBI::dbDisconnect(con))
 
 postgres_application_name <- function() {
   
+  # Get infomation
   list_version <- R.Version()
   
+  # Clean
   version <- list_version$version.string
   version <- stringr::str_replace_all(version, "\\s*\\([^\\)]+\\)", "")
   version <- stringr::str_replace(version, "version ", "")
@@ -127,6 +129,7 @@ postgres_application_name <- function() {
   # Add package name too
   version <- stringr::str_c(version, " with RPostgreSQL")
   
+  # Return
   version
   
 }

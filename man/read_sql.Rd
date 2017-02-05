@@ -15,10 +15,9 @@ Character vector.
 \description{
 To-do: Mutli-line commenting is not correctly parsed yet, fix.
 }
-\author{
-Stuart K. Grange
-}
 \seealso{
 \code{\link{db_send}}, \code{\link{db_get}}
 }
-
+\author{
+Stuart K. Grange
+}

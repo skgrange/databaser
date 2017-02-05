@@ -2,7 +2,7 @@
 % Please edit documentation in R/db_use_sql.R
 \name{db_use_sql}
 \alias{db_use_sql}
-\title{Function to load SQL script and send it to a database.}
+\title{Function to load SQL script and send it to a database to be executed.}
 \usage{
 db_use_sql(con, file)
 }
@@ -12,9 +12,8 @@ db_use_sql(con, file)
 \item{file}{File name of SQL script.}
 }
 \description{
-Function to load SQL script and send it to a database.
+Function to load SQL script and send it to a database to be executed.
 }
 \author{
 Stuart K. Grange
 }
-

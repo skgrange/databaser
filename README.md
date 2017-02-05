@@ -6,7 +6,7 @@
 
   - Functions include: 
     - `db_connect`
-    - `db_send` (vectorised)
+    - `db_send` and `db_execute` (both vectorised)
     - `db_get`
     - `db_insert`
     - `db_contents`

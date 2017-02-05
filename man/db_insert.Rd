@@ -22,11 +22,10 @@ exists.}
 \code{db_insert} is a wrapper for \code{\link{dbWriteTable}}, but uses 
 different defaults. \code{db_insert} will not replace data by default.
 }
-\author{
-Stuart K. Grange
-}
 \seealso{
 \code{\link{dbWriteTable}}, \code{\link{db_list_variables}},
 \code{\link{db_table_names}}, \code{\link{db_arrange_variables}}
 }
-
+\author{
+Stuart K. Grange
+}

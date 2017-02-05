@@ -16,4 +16,3 @@ convert \code{NA}s to \code{NULL}s.
 \author{
 Stuart K. Grange
 }
-

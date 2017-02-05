@@ -15,4 +15,3 @@ Only PostgreSQL databases are supported currently.
 \author{
 Stuart K. Grange
 }
-

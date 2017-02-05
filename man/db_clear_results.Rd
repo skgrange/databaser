@@ -12,4 +12,3 @@ db_clear_results(con)
 \description{
 Function to clear results for a database connection.
 }
-

@@ -18,4 +18,3 @@ Function to get database name.
 \author{
 Stuart K. Grange
 }
-

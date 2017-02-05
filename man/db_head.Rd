@@ -19,4 +19,3 @@ Function to get first \emph{n} rows of a database table.
 \author{
 Stuart K. Grange
 }
-

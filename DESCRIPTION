@@ -1,22 +1,23 @@
 Package: databaser
 Type: Package
 Title: An R package to keep database interaction easy and consistent
-Version: 0.0.15
-Date: 2017-01-12
+Version: 0.0.18
+Date: 2017-02-05
 Authors@R: person("Stuart", "Grange", email = "s.k.grange@gmail.com", 
     role = c("cre", "aut"))
 Description: An R package to keep database interaction easy and consistent
 License: GPL (>= 2)
 ByteCompile: true
+Depends:
+    dplyr
 Imports:
     stringr,
     lubridate,
     plyr,
-    dplyr,
     DBI,
     RSQLite,
     RMySQL,
     RPostgreSQL,
     testthat
 Suggests:
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.0

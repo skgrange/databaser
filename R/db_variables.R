@@ -49,8 +49,10 @@ get_names <- function (table, con) {
   })
   
   # Make data frame
-  df <- data.frame(table = table, 
-                   variable = variables)
+  df <- data.frame(
+    table = table, 
+    variable = variables
+  )
   
   # Return
   df

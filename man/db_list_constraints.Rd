@@ -15,4 +15,3 @@ db_list_constraints(con)
 \author{
 Stuart K. Grange
 }
-

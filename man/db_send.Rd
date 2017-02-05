@@ -15,6 +15,8 @@ db_send(con, statement, progress = "none")
 }
 \description{
 \code{db_send} is a wrapper for \code{DBI::dbSendQuery} but is vectorised 
-over \code{statement}
+over \code{statement}.
 }
-
+\author{
+Stuart K. Grange
+}

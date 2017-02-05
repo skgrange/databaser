@@ -1,6 +1,7 @@
-#' Function to load SQL script and send it to a database. 
+#' Function to load SQL script and send it to a database to be executed. 
 #' 
 #' @param con Database connection. 
+#' 
 #' @param file File name of SQL script. 
 #' 
 #' @author Stuart K. Grange
@@ -12,7 +13,7 @@ db_use_sql <- function(con, file) {
   sql <- read_sql(file)
   
   # Use statements
-  plyr::l_ply(sql, function(x) db_send(con, x))
+  plyr::l_ply(sql, function(x) db_execute(con, x))
   
   # No return
   

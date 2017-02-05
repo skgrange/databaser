@@ -14,4 +14,3 @@ db_get(con, statement)
 \description{
 \code{db_get} is a wrapper for \code{DBI::dbGetQuery}.
 }
-

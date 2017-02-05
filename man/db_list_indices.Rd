@@ -17,4 +17,3 @@ Only SQLite databases are currently supported.
 \author{
 Stuart K. Grange
 }
-

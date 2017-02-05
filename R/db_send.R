@@ -1,7 +1,9 @@
 #' Function to send a statements to a database. 
 #' 
 #' \code{db_send} is a wrapper for \code{DBI::dbSendQuery} but is vectorised 
-#' over \code{statement}
+#' over \code{statement}.
+#' 
+#' @author Stuart K. Grange
 #' 
 #' @param con Database connection. 
 #' @param statement Statement to send to \code{con}. 

@@ -17,4 +17,3 @@ db_list_activities(con, json = FALSE)
 \author{
 Stuart K. Grange
 }
-

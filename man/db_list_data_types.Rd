@@ -20,4 +20,3 @@ returned.}
 \author{
 Stuart K. Grange
 }
-

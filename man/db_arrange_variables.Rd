@@ -21,4 +21,3 @@ look-up tables are being created.
 \author{
 Stuart K. Grange
 }
-

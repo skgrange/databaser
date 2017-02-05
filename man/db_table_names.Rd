@@ -20,10 +20,9 @@ Data frame with no observations, only headers.
 If a database table is empty, this function can fail on some databases. To-do:
 catch this.
 }
-\author{
-Stuart K. Grange
-}
 \seealso{
 \code{\link{dbWriteTable}}, \code{\link{rbind.fill}}
 }
-
+\author{
+Stuart K. Grange
+}

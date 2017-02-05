@@ -17,4 +17,3 @@ Function to analyse/analyze a database table.
 \author{
 Stuart K. Grange
 }
-

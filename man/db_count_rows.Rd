@@ -24,4 +24,3 @@ avoid integer overflow issues.
 \author{
 Stuart K. Grange
 }
-

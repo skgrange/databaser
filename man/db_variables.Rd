@@ -24,4 +24,3 @@ table_variables <- db_variables(con)
 \author{
 Stuart K. Grange
 }
-
