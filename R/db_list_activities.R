@@ -1,17 +1,16 @@
 #' Function to list activities/processes for a database. 
 #' 
-#' \code{db_list_activities} only supports PostgreSQL databases at present. 
+#' \code{db_list_activities} supports PostgreSQL and MySQL databases at present. 
 #' 
 #' @param con Database connection. 
-#' @param json Should the return be formatted as a JSON string. 
+#' @param json Should the return be formatted as a JSON string? 
 #' 
 #' @author Stuart K. Grange
 #' 
 #' @export
 db_list_activities <- function(con, json = FALSE) {
   
-  # Postgres
-  if (grepl("postgres", class(con), ignore.case = TRUE)) {
+  if (grepl("postgres", class(con)[1], ignore.case = TRUE)) {
     
     df <- suppressWarnings(
       db_get(con, "SELECT * FROM pg_stat_activity")
@@ -19,8 +18,11 @@ db_list_activities <- function(con, json = FALSE) {
     
   }
   
-  # Others, at the moment
-  if (grepl("sqlite|mysql", class(con), ignore.case = TRUE))
+  if (grepl("mysql", class(con), ignore.case = TRUE))
+    df <- db_get(con, "SHOW PROCESSLIST")
+  
+  # Others
+  if (grepl("sqlite", class(con), ignore.case = TRUE))
     stop("Not implemented.", call. = FALSE)
   
   # Make a json object
@@ -30,4 +32,3 @@ db_list_activities <- function(con, json = FALSE) {
   df
   
 }
-

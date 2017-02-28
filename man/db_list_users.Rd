@@ -10,7 +10,7 @@ db_list_users(con)
 \item{con}{Database connection.}
 }
 \value{
-Data frame
+Data frame.
 }
 \description{
 Function to list users for a database.

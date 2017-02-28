@@ -9,10 +9,10 @@ db_list_activities(con, json = FALSE)
 \arguments{
 \item{con}{Database connection.}
 
-\item{json}{Should the return be formatted as a JSON string.}
+\item{json}{Should the return be formatted as a JSON string?}
 }
 \description{
-\code{db_list_activities} only supports PostgreSQL databases at present.
+\code{db_list_activities} supports PostgreSQL and MySQL databases at present.
 }
 \author{
 Stuart K. Grange

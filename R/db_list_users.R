@@ -4,7 +4,7 @@
 #' 
 #' @author Stuart K. Grange
 #' 
-#' @return Data frame
+#' @return Data frame. 
 #' 
 #' @examples 
 #' \dontrun{
@@ -17,17 +17,19 @@
 #' @export
 db_list_users <- function(con) {
   
-  if (grepl("postgre", class(con)[1], ignore.case = TRUE)){
+  if (grepl("postgres", class(con)[1], ignore.case = TRUE)) {
     
     df <- suppressWarnings(
       db_get(con, "SELECT * FROM pg_user")
     )
     
-  } else {
-    
-    stop("Not implemented...", call. = FALSE)
-    
-  }
+  } 
+  
+  if (grepl("mysql", class(con), ignore.case = TRUE))
+    df <- db_get(con, "SELECT User AS user FROM mysql.user")
+  
+  if (grepl("sqlite", class(con), ignore.case = TRUE))
+    stop("Not implemented.", call. = FALSE)
   
   # Return
   df
