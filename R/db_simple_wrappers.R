@@ -1,14 +1,3 @@
-#' Function to get/fetch data from a database with a statement. 
-#' 
-#' \code{db_get} is a wrapper for \code{DBI::dbGetQuery}. 
-#' 
-#' @param con Database connection. 
-#' @param statement Statement to send to \code{con}. 
-#' 
-#' @export
-db_get <- function(con, statement) DBI::dbGetQuery(con, statement)
-
-
 #' Function to read an entire database table. 
 #' 
 #' \code{db_read_table} is a wrapper for \code{DBI::dbReadTable}. 
