@@ -6,3 +6,7 @@ r_binary_packages:
   - Rcpp
   - testthat
 
+# Install development package
+r_github_packages:
+  - skgrange/threadr
+
