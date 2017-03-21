@@ -13,7 +13,7 @@ db_kill_process(con, process)
 find this integer.}
 }
 \description{
-Currently, only PostgreSQL databases are supported.
+Function to kill a database process.
 }
 \author{
 Stuart K. Grange

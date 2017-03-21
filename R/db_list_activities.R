@@ -19,7 +19,7 @@ db_list_activities <- function(con, json = FALSE) {
   }
   
   if (grepl("mysql", class(con), ignore.case = TRUE))
-    df <- db_get(con, "SHOW PROCESSLIST")
+    df <- db_get(con, "SHOW FULL PROCESSLIST")
   
   # Others
   if (grepl("sqlite", class(con), ignore.case = TRUE))

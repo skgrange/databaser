@@ -1,6 +1,4 @@
 #' Function to kill a database process. 
-#' 
-#' Currently, only PostgreSQL databases are supported.  
 #'
 #' @author Stuart K. Grange
 #' 
@@ -19,6 +17,14 @@ db_kill_process <- function(con, process) {
     sql <- stringr::str_c("SELECT pg_cancel_backend(", process, ")")
     
     # Use
+    db_execute(con, sql)
+    
+  }
+  
+  # MySQL
+  if (grepl("mysql", class(con), ignore.case = TRUE)) {
+    
+    sql <- stringr::str_c("kill ", process)
     db_execute(con, sql)
     
   }
