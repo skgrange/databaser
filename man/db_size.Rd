@@ -11,6 +11,9 @@ db_size(con, unit = "mb")
 
 \item{unit}{Measurement unit. Default is \code{"mb"} for megabytes.}
 }
+\value{
+Numeric vector.
+}
 \description{
 For SQLite databases, the file size is returned but for PostgreSQL databases,
 the `pg_database` table is queried.

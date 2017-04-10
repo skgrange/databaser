@@ -30,7 +30,8 @@ db_contents <- function(con, limit = 1, process = "text") {
   tables <- db_list_tables(con)
   
   # Apply function
-  df <- plyr::ldply(tables, table_reader, con, limit = limit, .progress = process)
+  df <- plyr::ldply(tables, db_contents_worker, con, limit = limit, 
+                    .progress = process)
   
   # Return
   df
@@ -41,34 +42,51 @@ db_contents <- function(con, limit = 1, process = "text") {
 # The function which does the work
 # 
 # No export
-table_reader <- function(table, con, limit = NA) {
+db_contents_worker <- function(table, con, limit = NA) {
   
   if (is.na(limit)) {
     
     # Read entire table
-    suppressWarnings(
-      df <- tryCatch(DBI::dbReadTable(con, table),
-                     error = function(e) data.frame(table = integer()))
-    )
+    df <- tryCatch({
+      
+      db_read_table(con, table)
+      
+    }, error = function(e) {
+      
+      data.frame(table = character())
+      
+    })
     
   } else {
     
     # Only read n rows/observations
-    suppressWarnings(
-      df <- tryCatch(DBI::dbGetQuery(con, stringr::str_c("SELECT * FROM ", 
-                                                         table, 
-                                                         " LIMIT ", limit)),
-                     error = function(e) data.frame(table = integer()))
-    )
+    df <- tryCatch({
+      
+      df <- db_get(con, stringr::str_c("SELECT * FROM ", table, " LIMIT ", limit))
+      
+      # Postgres sometimes returns null if table does not exist, so raise error
+      if (is.null(df)) stop()
+      
+      # Return
+      df
+      
+    }, error = function(e) {
+      
+      data.frame(table = character())
+      
+    })
     
   }
   
   # A catch if the table cannot be accessed, e.g. PostGIS extensions
   if (nrow(df) == 0) {
     
-    df <- data.frame(table = table, 
-                     variable = NA, 
-                     value = NA)
+    df <- data.frame(
+      table = table, 
+      variable = NA, 
+      value = NA,
+      stringsAsFactors = FALSE
+    )
     
   } else {
     

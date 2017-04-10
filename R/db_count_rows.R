@@ -21,6 +21,9 @@ db_count_rows <- function(con, table = NA, estimate = FALSE, progress = "none") 
   # If no table is selected, do them all
   if (is.na(table[1])) table <- db_list_tables(con)
   
+  # Check
+  if (length(table) == 0) stop("Database has no tables...", call. = FALSE)
+  
   # Only some tables
   df <- plyr::ldply(table, function(x) db_row_counter(con, x, estimate),
                     .progress = progress)

@@ -1,18 +1,24 @@
 #' Function to get the version of a database service.
 #' 
-#' Only PostgreSQL databases are supported currently. 
-#' 
 #' @author Stuart K. Grange
 #' 
 #' @param con Database connection. 
 #' 
+#' @return Character vector
+#' 
 #' @export
 db_version <- function(con) {
   
+  # SQLite
+  if (db.class(con) == "sqlite") 
+    x <- db_get(con, "SELECT sqlite_version()")[, 1]
+  
+  if (db.class(con) == "mysql") 
+    stop("Not implemented...", call. = FALSE)
+  
   # Postgres
-  if (grepl("postgres", class(con), ignore.case = TRUE))
+  if (db.class(con) == "postgres")
     x <- db_get(con, "SELECT version()")[, 1]
-    # SHOW server_version; SHOW server_version_num;
   
   # Return
   x

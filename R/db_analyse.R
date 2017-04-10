@@ -5,11 +5,13 @@
 #' 
 #' @author Stuart K. Grange
 #' 
+#' @return Invisible
+#' 
 #' @export
 db_analyse <- function(con, table) {
   
   # Postgres
-  if (grepl("postgres", class(con), ignore.case = TRUE))
+  if (db.class(con) == "postgres")
     db_send(con, stringr::str_c("ANALYZE ", table))
   
   # No return

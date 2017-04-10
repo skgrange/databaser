@@ -9,8 +9,11 @@ db_version(con)
 \arguments{
 \item{con}{Database connection.}
 }
+\value{
+Character vector
+}
 \description{
-Only PostgreSQL databases are supported currently.
+Function to get the version of a database service.
 }
 \author{
 Stuart K. Grange
