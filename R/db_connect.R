@@ -1,4 +1,4 @@
-#' Function to create a database connection with a JSON configuration file. 
+#' Function to create a database connection with a \code{JSON} configuration file. 
 #' 
 #' \code{db_connect} uses a \code{JSON} configuration file to create a database
 #' connection. This configuration file will often exist outside a code package 
@@ -6,6 +6,11 @@
 #' 
 #' If only one entry is in the \code{JSON} file, the \code{database} argument is
 #' not needed.
+#' 
+#' If \code{db_connect} is attempted to be used with a file which is not 
+#' \code{JSON}, it will attempt to connect to an SQLite database, but it is 
+#' recommended that the \code{config} argument is set to \code{FALSE} in this 
+#' case. 
 #'
 #' MySQL, PostgreSQL, and SQLite connections are currently supported. 
 #' 
@@ -17,7 +22,7 @@
 #' is not needed and will be ignored if used. 
 #' 
 #' @param config A logical to skip the \code{JSON} file configuration and just
-#' attempt to connect to \code{file} directly. This is used for \code{SQLite}
+#' attempt to connect to \code{file} directly. This is used for SQLite
 #' databases which require no configuration. 
 #' 
 #' @param foreign_keys A logical for SQLite databases where foreign keys should 
@@ -49,17 +54,36 @@
 #' 
 #' 
 #' # A SQLite connection needs no configuration
-#' con <- db_connect("../databases/air_quality_data.sqlite", config = FALSE)
+#' con <- db_connect("../databases/air_quality_data.db", config = FALSE)
 #' 
 #' }
 #' 
 #' @export
 db_connect <- function(file, database, config = TRUE, foreign_keys = FALSE) {
   
-  if (config) {
+  # Load configuration file
+  json <- tryCatch({
     
-    # Load configuration file
-    json <- jsonlite::fromJSON(file)
+    # Read
+    jsonlite::fromJSON(file)
+    
+  }, error = function(e) {
+    
+    # Capture and return error text
+    conditionMessage(e)
+    
+  })
+  
+  # If config is TRUE and the file is not json, attempt SQLite connection
+  if (any(grepl("lexical error", json, ignore.case = TRUE)) | 
+    any(grepl("sqlite", json, ignore.case = TRUE))) {
+    
+    # Set config to false for SQLite databases
+    config <- FALSE
+    
+  }
+  
+  if (config) {
     
     # If json file has many database connection details, filter with argument
     if (class(json) == "data.frame")
@@ -110,7 +134,6 @@ db_connect <- function(file, database, config = TRUE, foreign_keys = FALSE) {
 
 #' @export
 db_disconnect <- function(con) quiet(DBI::dbDisconnect(con))
-
 
 
 postgres_application_name <- function() {
