@@ -7,7 +7,7 @@
 #' 
 #' @param df Data frame. 
 #' 
-#' @import stringr
+#' @importFrom stringr str_replace_all str_c
 #' 
 #' @export
 sql_formatter <- function(df) {

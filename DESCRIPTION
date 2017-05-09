@@ -1,8 +1,8 @@
 Package: databaser
 Type: Package
 Title: An R package to keep database interaction easy and consistent
-Version: 0.0.26
-Date: 2017-04-19
+Version: 0.0.27
+Date: 2017-05-09
 Authors@R: person("Stuart", "Grange", email = "s.k.grange@gmail.com", 
     role = c("cre", "aut"))
 Description: An R package to keep database interaction easy and consistent
