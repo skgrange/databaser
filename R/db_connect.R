@@ -93,26 +93,32 @@ db_connect <- function(file, database, config = TRUE, foreign_keys = FALSE) {
     if (grepl("mysql", json$driver, ignore.case = TRUE)) {
       
       # Connect
-      con <- DBI::dbConnect(RMySQL::MySQL(), 
-                            host = json$host, 
-                            dbname = json$database_name,
-                            user = json$user, 
-                            password = json$password)
+      con <- DBI::dbConnect(
+        RMySQL::MySQL(), 
+        host = json$host, 
+        dbname = json$database_name,
+        user = json$user, 
+        password = json$password
+      )
       
     }
     
     if (grepl("postg", json$driver, ignore.case = TRUE)) {
       
       # Connect
-      con <- DBI::dbConnect(RPostgreSQL::PostgreSQL(), 
-                            host = json$host, 
-                            dbname = json$database_name,
-                            user = json$user, 
-                            password = json$password)
+      con <- DBI::dbConnect(
+        RPostgreSQL::PostgreSQL(), 
+        host = json$host, 
+        dbname = json$database_name,
+        user = json$user, 
+        password = json$password
+      )
       
       # Also give application name
-      db_execute(con, stringr::str_c("SET application_name = '", 
-                                     postgres_application_name(), "'"))
+      db_execute(con, stringr::str_c(
+        "SET application_name = '", 
+        postgres_application_name(), "'")
+      )
       
     }
     

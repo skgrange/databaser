@@ -5,7 +5,7 @@
 #' 
 #' @author Stuart K. Grange
 #' 
-#' @return Invisible
+#' @return Invisible.
 #' 
 #' @export
 db_analyse <- function(con, table) {

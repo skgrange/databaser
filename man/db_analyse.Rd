@@ -12,7 +12,7 @@ db_analyse(con, table)
 \item{table}{Database table.}
 }
 \value{
-Invisible
+Invisible.
 }
 \description{
 Function to analyse/analyze a database table.
