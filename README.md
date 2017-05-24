@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/skgrange/databaser.svg?branch=master)](https://travis-ci.org/skgrange/databaser)
 
+![](inst/extdata/images/icon_small.png)
+
 **databaser** is an R package which extends [**DBI**](https://github.com/rstats-db/DBI), [**RSQLite**](https://github.com/rstats-db/RSQLite), [**RMySQL**](https://github.com/rstats-db/RMySQL), and [**RPostgreSQL**](https://code.google.com/archive/p/rpostgresql/). **databaser**  keeps things consistent with functions starting with `db_`. **databaser** contains many simple wrappers which are sometimes undesirable, but they are included for consistency. 
 
   - Functions include: 

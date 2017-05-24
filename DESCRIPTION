@@ -5,6 +5,7 @@ Version: 0.0.28
 Date: 2017-05-19
 Authors@R: person("Stuart", "Grange", email = "s.k.grange@gmail.com", 
     role = c("cre", "aut"))
+Maintainer: Stuart K. Grange <s.k.grange@gmail.com>
 Description: An R package to keep database interaction easy and consistent
 License: GPL (>= 2)
 ByteCompile: true
