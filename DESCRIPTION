@@ -1,8 +1,8 @@
 Package: databaser
 Type: Package
 Title: An R package to keep database interaction easy and consistent
-Version: 0.0.29
-Date: 2017-06-10
+Version: 0.0.30
+Date: 2017-06-12
 Authors@R: person("Stuart", "Grange", email = "s.k.grange@gmail.com", 
     role = c("cre", "aut"))
 Maintainer: Stuart K. Grange <s.k.grange@gmail.com>
@@ -12,7 +12,6 @@ ByteCompile: true
 Depends:
 Imports:
     dplyr,
-    dbplyr,
     stringr,
     lubridate,
     plyr,

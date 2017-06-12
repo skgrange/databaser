@@ -5,14 +5,20 @@
 \alias{db_optimise}
 \title{Functions to vacuum, analyse, and optimise database tables.}
 \usage{
-db_vacuum(con, table)
+db_vacuum(con, table, return = FALSE)
 
-db_optimise(con, table)
+db_optimise(con, table, return = FALSE)
 }
 \arguments{
 \item{con}{Database connection.}
 
 \item{table}{Database table.}
+
+\item{return}{Should the function return a data frame containing the database
+sizes pre- and post-vacuum?}
+}
+\value{
+Invisible or data frame if \code{return = TRUE}.
 }
 \description{
 The PostgreSQL statement uses \code{VACUUM (VERBOSE)}, the MySQL statement
