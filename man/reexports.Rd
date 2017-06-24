@@ -3,8 +3,6 @@
 \docType{import}
 \name{reexports}
 \alias{reexports}
-\alias{db_list_tables}
-\alias{reexports}
 \alias{db_has_table}
 \alias{reexports}
 \alias{db_drop_table}
@@ -15,6 +13,6 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{dplyr}{\code{\link[dplyr]{db_list_tables}}, \code{\link[dplyr]{db_has_table}}, \code{\link[dplyr]{db_drop_table}}}
+  \item{dplyr}{\code{\link[dplyr]{db_has_table}}, \code{\link[dplyr]{db_drop_table}}}
 }}
 

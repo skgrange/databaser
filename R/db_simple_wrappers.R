@@ -40,4 +40,16 @@ db_clear_results <- function(con) DBI::dbClearResult(db_list_results(con))
 #' 
 #' @param con Database connection.
 #' 
+#' @export
 db_commit <- function(con) DBI::dbCommit(con)
+
+
+#' Function to list database tables.
+#' 
+#' @param con Database connection.
+#' 
+#' @return Character vector. 
+#' 
+#' @export
+db_list_tables <- function(con) DBI::dbListTables(con)
+
