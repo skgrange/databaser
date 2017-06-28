@@ -53,3 +53,13 @@ db_commit <- function(con) DBI::dbCommit(con)
 #' @export
 db_list_tables <- function(con) DBI::dbListTables(con)
 
+
+#' Function to test if database contains a table.
+#' 
+#' @param con Database connection.
+#' @param table A table name. 
+#' 
+#' @return Logical vector. 
+#' 
+#' @export
+db_table_exists <- function(con, table) DBI::dbExistsTable(con, table)

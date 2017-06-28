@@ -10,16 +10,13 @@
 #' @export
 db_name <- function(con, extension = TRUE) {
   
-  # Postgres
-  if (grepl("postgres", class(con), ignore.case = TRUE))
+  if (db.class(con) == "postgres")
     x <- db_get(con, "SELECT CURRENT_DATABASE()")[, 1]
   
-  # MySQL
-  if (grepl("mysql", class(con), ignore.case = TRUE))
+  if (db.class(con) == "mysql")
     x <- db_get(con, "SELECT DATABASE()")[, 1]
   
-  # SQLite
-  if (grepl("sqlite", class(con), ignore.case = TRUE)) {
+  if (db.class(con) == "sqlite") {
     
     # Get file name
     x <- basename(con@dbname)

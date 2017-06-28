@@ -41,8 +41,14 @@ db_insert <- function(con, table, df, replace = FALSE) {
   # Write data frame to database
   # Do not display cat output
   quiet(
-    DBI::dbWriteTable(con, table, df, append = append, overwrite = overwrite, 
-                      row.names = FALSE)
+    DBI::dbWriteTable(
+      con, 
+      table, 
+      df, 
+      append = append, 
+      overwrite = overwrite, 
+      row.names = FALSE
+    )
   )
   
   # No return
