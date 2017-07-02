@@ -13,7 +13,7 @@
 #' @param return Should the function return a data frame containing the database
 #' sizes pre- and post-vacuum? 
 #' 
-#' @return Invisible or data frame if \code{return = TRUE}. 
+#' @return Invisible or data frame if assigned. 
 #' 
 #' @examples 
 #' \dontrun{
@@ -24,22 +24,16 @@
 #' }
 #' 
 #' @export
-db_vacuum <- function(con, table, return = FALSE) {
+db_vacuum <- function(con, table) {
   
   # Get things pre-vacuum
-  if (return) {
-    
-    date_pre <- Sys.time()
-    size_pre <- db_size(con)
-    
-  }
+  date_pre <- Sys.time()
+  size_pre <- db_size(con)
   
-  # PostgreSQL databases
-  if (grepl("postgresql", class(con), ignore.case = TRUE))
+  if (db.class(con) == "postgres")
     quiet(db_execute(con, stringr::str_c("VACUUM (VERBOSE) ", table)))
   
-  # MySQL databases
-  if (grepl("mysql", class(con), ignore.case = TRUE)) {
+  if (db.class(con) == "mysql") {
     
     # Catch the reserved verbs
     table <- stringr::str_c("`", table, "`")
@@ -49,30 +43,20 @@ db_vacuum <- function(con, table, return = FALSE) {
     
   }
   
-  # SQLite
-  if (grepl("sqlite", class(con), ignore.case = TRUE))
-    quiet(db_execute(con, "VACUUM"))
+  if (db.class(con) == "sqlite") quiet(db_execute(con, "VACUUM"))
   
   # Get things post-vacuum
-  if (return) {
+  date_post <- Sys.time()
+  size_post <- db_size(con)
     
-    date_post <- Sys.time()
-    size_post <- db_size(con)
-    
-    df <- data.frame(
-      when = c("pre_vacuum", "post_vacuum"),
-      date = c(date_pre, date_post), 
-      size = c(size_pre, size_post), 
-      stringsAsFactors = FALSE
-    )
-    
-    return(df)
-    
-  } else {
-   
-    return(invisible()) 
-    
-  }
+  df <- data.frame(
+    when = c("pre_vacuum", "post_vacuum"),
+    date = c(date_pre, date_post),
+    size = c(size_pre, size_post),
+    stringsAsFactors = FALSE
+  )
+  
+  return(invisible(df)) 
   
 }
 

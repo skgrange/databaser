@@ -25,11 +25,13 @@ db_count_rows <- function(con, table = NA, estimate = FALSE, progress = "none") 
   if (length(table) == 0) stop("Database has no tables...", call. = FALSE)
   
   # Only some tables
-  df <- plyr::ldply(table, function(x) db_row_counter(con, x, estimate),
-                    .progress = progress)
-  
-  # No factors
-  df <- threadr::factor_coerce(df)
+  df <- plyr::ldply(
+    table, function(x) db_row_counter(
+      con, 
+      x, 
+      estimate
+    ), 
+    .progress = progress)
   
   # Add separator
   df$row_count <- threadr::str_thousands_separator(df$row_count)
@@ -46,21 +48,28 @@ db_row_counter <- function(con, table, estimate) {
   if (estimate) {
     
     # Will only work for postgres
-    sql <- stringr::str_c("SELECT reltuples::bigint AS row_count 
-                           FROM pg_class 
-                           WHERE relname = '", table, "'")
+    sql <- stringr::str_c(
+      "SELECT reltuples::bigint AS row_count 
+      FROM pg_class 
+      WHERE relname = '", table, "'"
+    )
 
   } else {
     
     # Create statement, use text so 32 bit integers are not a limitation
-    sql <- stringr::str_c("SELECT CAST(COUNT(*) AS TEXT) AS row_count 
-                           FROM ", table)
+    sql <- stringr::str_c(
+      "SELECT CAST(COUNT(*) AS TEXT) AS row_count 
+      FROM ", 
+      table
+    )
     
     # Do not use the cast function here
     if (grepl("mysql", class(con)[1], ignore.case = TRUE)) {
       
-      sql <- stringr::str_c("SELECT COUNT(*) AS row_count 
-                             FROM ", table)
+      sql <- stringr::str_c(
+        "SELECT COUNT(*) AS row_count 
+         FROM ", table
+      )
       
     }
       

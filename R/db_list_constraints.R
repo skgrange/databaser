@@ -9,8 +9,7 @@
 #' @export
 db_list_constraints <- function(con) {
   
-  # Postgres
-  if (grepl("postgres", class(con), ignore.case = TRUE))
+  if (db.class(con) == "postgres")
     df <- db_get(con, "SELECT * FROM information_schema.constraint_column_usage")
     
   # Return
