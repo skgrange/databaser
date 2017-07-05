@@ -11,7 +11,7 @@
 #' @return Invisible. 
 #' 
 #' @export
-db_version <- function(con, table) {
+db_truncate_table <- function(con, table) {
   
   if (db.class(con) == "sqlite") 
     sql <- stringr::str_c("DELETE FROM ", table)
