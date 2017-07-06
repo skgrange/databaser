@@ -10,15 +10,12 @@
 #' 
 #' @param table Database table. 
 #' 
-#' @param return Should the function return a data frame containing the database
-#' sizes pre- and post-vacuum? 
-#' 
 #' @return Invisible or data frame if assigned. 
 #' 
 #' @examples 
 #' \dontrun{
 #' 
-#' db_vacuum_analyse(con, "model_data")
+#' db_vacuum(con, "model_data")
 #' db_optimise(con, "air_quality_data")
 #' 
 #' }

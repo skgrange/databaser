@@ -13,9 +13,6 @@ db_optimise(con, table)
 \item{con}{Database connection.}
 
 \item{table}{Database table.}
-
-\item{return}{Should the function return a data frame containing the database
-sizes pre- and post-vacuum?}
 }
 \value{
 Invisible or data frame if assigned.
@@ -28,7 +25,7 @@ uses \code{OPTIMIZE}, and the SQLite statement uses \code{VACUUM} and the
 \examples{
 \dontrun{
 
-db_vacuum_analyse(con, "model_data")
+db_vacuum(con, "model_data")
 db_optimise(con, "air_quality_data")
 
 }
