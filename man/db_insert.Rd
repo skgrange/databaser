@@ -18,6 +18,9 @@ db_insert(con, table, df, replace = FALSE)
 Be cautious using this argument because it will drop the database table if it
 exists.}
 }
+\value{
+Invisible.
+}
 \description{
 \code{db_insert} is a wrapper for \code{\link{dbWriteTable}}, but uses 
 different defaults. \code{db_insert} will not replace data by default.

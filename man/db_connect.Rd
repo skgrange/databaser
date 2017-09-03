@@ -22,6 +22,9 @@ databases which require no configuration.}
 be enforced. Default is \code{FALSE}. For other database types, this will be 
 ignored.}
 }
+\value{
+Database connection.
+}
 \description{
 \code{db_connect} uses a \code{JSON} configuration file to create a database
 connection. This configuration file will often exist outside a code package 

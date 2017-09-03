@@ -18,6 +18,8 @@
 #' @param replace Should the database table be replaced? Default is \code{FALSE}. 
 #' Be cautious using this argument because it will drop the database table if it
 #' exists. 
+#' 
+#' @return Invisible.
 #'
 #' @export
 db_insert <- function(con, table, df, replace = FALSE) {

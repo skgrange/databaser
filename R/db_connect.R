@@ -31,6 +31,8 @@
 #' 
 #' @author Stuart K. Grange
 #' 
+#' @return Database connection. 
+#' 
 #' @examples
 #' \dontrun{
 #' 
@@ -132,8 +134,7 @@ db_connect <- function(file, database, config = TRUE, foreign_keys = FALSE) {
     
   }
   
-  # Return
-  con
+  return(con)
   
 }
 
