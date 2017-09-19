@@ -7,7 +7,7 @@
 db_count_rows(con, table = NA, estimate = FALSE, progress = "none")
 }
 \arguments{
-\item{con}{Database connection}
+\item{con}{Database connection.}
 
 \item{table}{Table name in \code{con}. If \code{table} is unknown, all tables
 in \code{con} will be queried.}
@@ -18,8 +18,8 @@ Default is \code{FALSE}.}
 \item{progress}{Type of progress bar to display. Default is \code{"none"}.}
 }
 \description{
-The \code{row_count} variable will be a string rather than an integer to 
-avoid integer overflow issues.
+The \code{row_count} variable will be a numeric value rather than an integer 
+to avoid integer overflow issues for large tables.
 }
 \author{
 Stuart K. Grange

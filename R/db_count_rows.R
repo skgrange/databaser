@@ -1,11 +1,11 @@
 #' Function to get row counts from database tables. 
 #' 
-#' The \code{row_count} variable will be a string rather than an integer to 
-#' avoid integer overflow issues. 
+#' The \code{row_count} variable will be a numeric value rather than an integer 
+#' to avoid integer overflow issues for large tables. 
 #' 
 #' @author Stuart K. Grange
 #' 
-#' @param con Database connection
+#' @param con Database connection.
 #' 
 #' @param table Table name in \code{con}. If \code{table} is unknown, all tables
 #' in \code{con} will be queried. 
@@ -26,24 +26,20 @@ db_count_rows <- function(con, table = NA, estimate = FALSE, progress = "none") 
   
   # Only some tables
   df <- plyr::ldply(
-    table, function(x) db_row_counter(
+    table, function(x) db_count_rows_worker(
       con, 
       x, 
       estimate
     ), 
     .progress = progress)
   
-  # Add separator
-  df$row_count <- threadr::str_thousands_separator(df$row_count)
-  
-  # Return
-  df
+  return(df)
   
 }
 
 
 # Function to get the row counts
-db_row_counter <- function(con, table, estimate) {
+db_count_rows_worker <- function(con, table, estimate) {
   
   if (estimate) {
     
@@ -56,9 +52,9 @@ db_row_counter <- function(con, table, estimate) {
 
   } else {
     
-    # Create statement, use text so 32 bit integers are not a limitation
+    # Create statement, use real so 32 bit integers are not a limitation
     sql <- stringr::str_c(
-      "SELECT CAST(COUNT(*) AS TEXT) AS row_count 
+      "SELECT CAST(COUNT(*) AS REAL) AS row_count 
       FROM ", 
       table
     )
@@ -96,7 +92,6 @@ db_row_counter <- function(con, table, estimate) {
     stringsAsFactors = FALSE
   )
   
-  # Return
-  df
+  return(df)
   
 }
