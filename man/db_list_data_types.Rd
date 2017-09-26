@@ -4,18 +4,19 @@
 \alias{db_list_data_types}
 \title{Function to list data types of database tables.}
 \usage{
-db_list_data_types(con, table = NA, json = FALSE)
+db_list_data_types(con, table = NA)
 }
 \arguments{
 \item{con}{Database connection.}
 
 \item{table}{Tables to get data types for. If not used, all tables will be
 returned.}
-
-\item{Should}{the return be in pretty JSON? Default is \code{FALSE}.}
+}
+\value{
+Data frame.
 }
 \description{
-\code{db_list_data_types} only supports PostgreSQL databases at present.
+\code{db_list_data_types} does not support MySQL databases at present.
 }
 \author{
 Stuart K. Grange

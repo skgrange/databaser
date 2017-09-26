@@ -1,26 +1,31 @@
 #' Function to list data types of database tables. 
 #' 
-#' \code{db_list_data_types} only supports PostgreSQL databases at present. 
+#' \code{db_list_data_types} does not support MySQL databases at present. 
 #' 
 #' @author Stuart K. Grange
 #' 
 #' @param con Database connection. 
+#' 
 #' @param table Tables to get data types for. If not used, all tables will be
 #' returned. 
-#' @param Should the return be in pretty JSON? Default is \code{FALSE}. 
+#' 
+#' @return Data frame. 
 #' 
 #' @export
-db_list_data_types <- function(con, table = NA, json = FALSE) {
+db_list_data_types <- function(con, table = NA) {
   
-  # Postgres only at the moment
-  if (grepl("postgres", class(con), ignore.case = TRUE)) { 
+  # Postgres
+  if (db.class(con) == "postgres") {
     
-    if (is.na(table)) {
+    if (is.na(table[1])) {
       
       # Make sql
-      sql <- stringr::str_c("SELECT table_name, column_name, 
-                          data_type 
-                          FROM information_schema.columns")
+      sql <- stringr::str_c(
+        "SELECT table_name, 
+         column_name, 
+         data_type 
+         FROM information_schema.columns"
+      )
       
     } else {
       
@@ -28,10 +33,13 @@ db_list_data_types <- function(con, table = NA, json = FALSE) {
       table <- threadr::str_sql_quote(table)
       
       # Make sql
-      sql <- stringr::str_c("SELECT table_name, column_name, 
-                          data_type 
-                          FROM information_schema.columns 
-                          WHERE table_name IN (", table, ")")
+      sql <- stringr::str_c(
+       "SELECT table_name, 
+        column_name, 
+        data_type 
+        FROM information_schema.columns 
+        WHERE table_name IN (", table, ")"
+      )
       
     }
     
@@ -41,8 +49,24 @@ db_list_data_types <- function(con, table = NA, json = FALSE) {
     # Query
     df <- db_get(con, sql)
     
-    # To json
-    if (json) df <- jsonlite::toJSON(df, pretty = TRUE)
+  } else if (db.class(con) == "sqlite") {
+    
+    if (is.na(table[1])) {
+      
+      # Get table vector
+      table <- db_list_tables(con)
+      
+    } 
+    
+    # Do for all tables
+    df <- plyr::ldply(
+      table, 
+      function(x) 
+        db_list_data_types_sql_lite_worker(
+          con,
+          x
+        )
+    )
     
   } else {
     
@@ -50,7 +74,25 @@ db_list_data_types <- function(con, table = NA, json = FALSE) {
     
   }
   
-  # Return
-  df
+  return(df)
+  
+}
+
+
+db_list_data_types_sql_lite_worker <- function(con, table) {
+  
+  # Build sql
+  sql <- stringr::str_c("PRAGMA table_info(", table, ")")
+  
+  # Query database
+  df <- db_get(con, sql)
+  
+  # Add variable 
+  df$table_name <- table
+  
+  # Select and rename
+  df <- dplyr::select(df, table_name, variable = name, data_type = type)
+  
+  return(df)
   
 }

@@ -9,20 +9,21 @@
 #' 
 #' @return Character vector with the lenth of one. 
 #' 
-#' 
+#' @export
 db_post_gis_version <- function(con, full = TRUE) {
   
-  # To-do: check with a database without postgis
+  # Build query
+  sql <- ifelse(full, "SELECT PostGIS_full_version()", "SELECT PostGIS_version()")
   
   if (db.class(con) == "postgres") {
     
-    if (full) {
+    x <- db_get(con, sql, warn = FALSE)[, 1]
+    
+    # Not a true error
+    if (is.null(x)) {
       
-      x <- db_get(con, "SELECT PostGIS_full_version()")[, 1]
-      
-    } else {
-      
-      x <- db_get(con, "SELECT PostGIS_version()")[, 1]
+      message("PostGIS is not installed...")
+      x <- FALSE
       
     }
     
