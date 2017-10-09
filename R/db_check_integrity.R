@@ -1,6 +1,6 @@
 #' Function to test database integrity. 
 #' 
-#' \code{db_integrity_check} is only implemented for SQLite databases. 
+#' \code{db_check_integrity} is only implemented for SQLite databases. 
 #' 
 #' @param con Database connection. 
 #' 
@@ -9,7 +9,7 @@
 #' @author Stuart K. Grange
 #' 
 #' @export
-db_integrity_check <- function(con) {
+db_check_integrity <- function(con) {
   
   if (db.class(con) == "sqlite") {
     
