@@ -6,8 +6,12 @@
 \usage{
 sql_update_builder(sql, table)
 }
+\value{
+Character vector.
+}
 \description{
-Function to build SQL UPDATE statements.
+\code{sql_update_builder} will use the first key-value pair to build the 
+WHERE clause. To-do: make better.
 }
 \author{
 Stuart K. Grange

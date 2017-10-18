@@ -6,14 +6,14 @@
 #' 
 #' @author Stuart K. Grange
 #' 
-#' @seealso \code{\link{sql_formatter}}
+#' @seealso \code{\link{sql_formatter}}, \code{\link{sql_update_builder}}. 
 #' 
 #' @importFrom stringr str_c
 #'
 #' @export
 sql_key_value <- function(df) {
   
-  # Key names only once
+  # Key names
   keys <- names(df)
   
   # Row-wise application of function
@@ -22,8 +22,7 @@ sql_key_value <- function(df) {
   # Drop attributes
   attributes(sql) <- NULL
   
-  # Return
-  sql
+  return(sql)
   
 }
 

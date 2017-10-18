@@ -16,7 +16,7 @@ List containing SQL key-value vectors.
 Function to create key-value strings for SQL statements.
 }
 \seealso{
-\code{\link{sql_formatter}}
+\code{\link{sql_formatter}}, \code{\link{sql_update_builder}}.
 }
 \author{
 Stuart K. Grange
