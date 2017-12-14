@@ -80,3 +80,35 @@ db_direct_read <- function(file, database, table) {
   return(df)
   
 }
+
+
+#' Function to connect and list a database's tables directly. 
+#' 
+#' \code{db_direct_list_tables} has been designed so a database can be connected 
+#' to, tables listed, data returned, and then disconnected with a single function
+#' call. 
+#' 
+#' @param file \code{JSON} file or string containing database connection 
+#' details. For SQLite databases, use the database's file path. See 
+#' \code{\link{db_connect}} for more information. 
+#' 
+#' @param database The name of the database within \code{file} to use to create
+#' a database connection to. If only one entry is in \code{file}, this argument 
+#' is not needed and will be ignored if used. 
+#' 
+#' @return Character vector. 
+#' 
+#' @author Stuart K. Grange
+#' 
+#' @export
+db_direct_list_tables <- function(file, database) {
+
+  # Connect to database
+  con <- db_connect(file, database)
+  
+  # Get tables
+  x <- db_list_tables(con)
+  
+  return(x)
+    
+}
