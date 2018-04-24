@@ -8,6 +8,7 @@
 #' 
 #' @return Invisible, called for the side effect of an error.  
 #' 
+#' @export
 db_wildcard_check <- function(x, type = "sql") {
   
   # Collapse
