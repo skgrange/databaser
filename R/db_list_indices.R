@@ -1,35 +1,35 @@
 #' Function to list indices for a database tables. 
 #' 
-#' Only SQLite databases are currently supported. 
-#' 
 #' @param con Database connection. 
-#' @param table Table name. If unused, all tables will be queried.  
+#' 
+#' @param table A vector of table names. If unused, all tables will be queried.  
 #' 
 #' @author Stuart K. Grange
 #' 
 #' @export
-db_list_indices <- function(con, table = NA) {
-  
-  # Get tables
-  tables <- db_list_tables(con)
-  
-  # SQLite databases
-  if (grepl("sqlite", class(con), ignore.case = TRUE))
-    df <- plyr::ldply(tables, function(x) index_query_er(con, x))
-  
-  # Postgres
-  if (grepl("postgres", class(con), ignore.case = TRUE))
+db_list_indices <- function(con) {
+
+  if (db.class(con) == "sqlite") {
+    
+    df <- purrr::map_dfr(db_list_tables(con), ~db_list_indices_worker(con, .x))
+    
+  } else if (db.class(con) == "postgres") {
+    
     df <- db_get(con, "SELECT * FROM pg_indexes")
-  
-  # Return
-  df
+    
+  } else {
+    
+    stop("Database not supported...", call. = FALSE)
+    
+  }
+    
+  return(df)
   
 }
 
 
-# For SQLite
-# No export
-index_query_er <- function(con, table) {
+# Ony for SQLite
+db_list_indices_worker <- function(con, table) {
   
   # Build statement
   sql <- stringr::str_c("PRAGMA INDEX_LIST('", table, "')")
@@ -37,7 +37,6 @@ index_query_er <- function(con, table) {
   # Query
   df <- db_get(con, sql)
   
-  # Return
-  df
+  return(df)
   
 }

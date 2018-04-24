@@ -10,6 +10,7 @@
 #' @examples
 #' \dontrun{
 #' 
+#' # Get variables
 #' table_variables <- db_variables(con)
 #' 
 #' }
@@ -17,17 +18,11 @@
 #' @export
 db_variables <- function(con) {
   
-  # Get table names
-  tables <- db_list_tables(con)
-  
   # Get all table's names
-  df <- plyr::ldply(tables, get_names, con)
+  df <- purrr::map_dfr(db_list_tables(con), ~db_variables_worker(con, .x)) %>% 
+    arrange(table)
   
-  # Arrange
-  df <- df[order(df$table), ]
-  
-  # Return
-  df
+  return(df)
   
 }
 
@@ -35,7 +30,7 @@ db_variables <- function(con) {
 # Function to get table and variable names from database table
 # 
 # No export
-get_names <- function (table, con) {
+db_variables_worker <- function(con, table) {
   
   # Get vector of variables from database table
   variables <- tryCatch({
@@ -51,10 +46,10 @@ get_names <- function (table, con) {
   # Make data frame
   df <- data.frame(
     table = table, 
-    variable = variables
+    variable = variables,
+    stringsAsFactors = FALSE
   )
   
-  # Return
-  df
+  return(df)
   
 }

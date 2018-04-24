@@ -13,10 +13,8 @@
 #' @param estimate Only for PostgreSQL, should the table count estimate be used? 
 #' Default is \code{FALSE}. 
 #' 
-#' @param progress Type of progress bar to display. Default is \code{"none"}. 
-#' 
 #' @export
-db_count_rows <- function(con, table = NA, estimate = FALSE, progress = "none") {
+db_count_rows <- function(con, table = NA, estimate = FALSE) {
   
   # If no table is selected, do them all
   if (is.na(table[1])) table <- db_list_tables(con)
@@ -24,14 +22,11 @@ db_count_rows <- function(con, table = NA, estimate = FALSE, progress = "none") 
   # Check
   if (length(table) == 0) stop("Database has no tables...", call. = FALSE)
   
-  # Only some tables
-  df <- plyr::ldply(
-    table, function(x) db_count_rows_worker(
-      con, 
-      x, 
-      estimate
-    ), 
-    .progress = progress)
+  # Do
+  df <- purrr::map_dfr(
+    table, 
+    ~db_count_rows_worker(con, table = .x, estimate = estimate)
+  )
   
   return(df)
   
@@ -44,7 +39,7 @@ db_count_rows_worker <- function(con, table, estimate) {
   if (estimate) {
     
     # Will only work for postgres
-    sql <- stringr::str_c(
+    sql <- str_c(
       "SELECT reltuples::bigint AS row_count 
       FROM pg_class 
       WHERE relname = '", table, "'"
@@ -53,16 +48,16 @@ db_count_rows_worker <- function(con, table, estimate) {
   } else {
     
     # Create statement, use real so 32 bit integers are not a limitation
-    sql <- stringr::str_c(
+    sql <- str_c(
       "SELECT CAST(COUNT(*) AS REAL) AS row_count 
       FROM ", 
       table
     )
     
     # Do not use the cast function here
-    if (grepl("mysql", class(con)[1], ignore.case = TRUE)) {
+    if (db.class(con) == "mysql") {
       
-      sql <- stringr::str_c(
+      sql <- str_c(
         "SELECT COUNT(*) AS row_count 
          FROM ", table
       )

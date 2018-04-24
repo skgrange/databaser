@@ -26,6 +26,8 @@
 #' @export
 db_contents <- function(con, limit = 1, process = "text") {
   
+  .Deprecated()
+  
   # Get tables
   tables <- db_list_tables(con)
   

@@ -4,7 +4,7 @@
 \alias{db_count_rows}
 \title{Function to get row counts from database tables.}
 \usage{
-db_count_rows(con, table = NA, estimate = FALSE, progress = "none")
+db_count_rows(con, table = NA, estimate = FALSE)
 }
 \arguments{
 \item{con}{Database connection.}
@@ -14,8 +14,6 @@ in \code{con} will be queried.}
 
 \item{estimate}{Only for PostgreSQL, should the table count estimate be used? 
 Default is \code{FALSE}.}
-
-\item{progress}{Type of progress bar to display. Default is \code{"none"}.}
 }
 \description{
 The \code{row_count} variable will be a numeric value rather than an integer 

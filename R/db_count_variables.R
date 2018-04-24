@@ -8,10 +8,9 @@ db_count_variables <- function(con, table = NA) {
   if (is.na(table[1])) table <- db_list_tables(con)
   
   # Do
-  df <- plyr::ldply(table, function(x) db_count_variables_worker(con, x))
+  df <- purrr::map_dfr(table, ~db_count_variables_worker(con, table = .x))
   
-  # Return
-  df
+  return(df)
   
 }
 

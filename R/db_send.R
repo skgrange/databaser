@@ -12,6 +12,8 @@
 #' @export
 db_send <- function(con, statement, progress = "none") {
   
+  .Defunct(new = "db_execute")
+  
   # Vectorise the function
   plyr::l_ply(statement, function(x) DBI::dbSendQuery(con, x), 
               .progress = progress)

@@ -20,17 +20,21 @@ sql_formatter <- function(df) {
     ifelse(is.character(x) | is.Date(x) | lubridate::is.POSIXct(x), TRUE, FALSE))
   
   # Escape single quotes
-  df[index_character] <- lapply(df[index_character], 
-                                function(x) str_replace_all(x, "'", "''"))
+  df[index_character] <- lapply(
+    df[index_character], 
+    function(x) str_replace_all(x, "'", "''")
+  )
   
   # Quote characters
-  df[index_character] <- lapply(df[index_character], 
-                                function(x) str_c("'", x, "'"))
+  df[index_character] <- lapply(
+    df[index_character], 
+    function(x) str_c("'", x, "'")
+  )
   
   # NA to NULL, no quoting here
   df[] <- lapply(df, function(x) ifelse(is.na(x), "NULL", x))
   
   # Return
-  df
+  return(df)
   
 }

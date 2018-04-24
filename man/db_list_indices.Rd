@@ -4,15 +4,15 @@
 \alias{db_list_indices}
 \title{Function to list indices for a database tables.}
 \usage{
-db_list_indices(con, table = NA)
+db_list_indices(con)
 }
 \arguments{
 \item{con}{Database connection.}
 
-\item{table}{Table name. If unused, all tables will be queried.}
+\item{table}{A vector of table names. If unused, all tables will be queried.}
 }
 \description{
-Only SQLite databases are currently supported.
+Function to list indices for a database tables.
 }
 \author{
 Stuart K. Grange
