@@ -3,10 +3,6 @@ sudo: required
 cache: packages
 warnings_are_errors: false
 
-r_binary_packages:
-  - Rcpp
-  - testthat
-
 r_packages:
   - devtools
 
