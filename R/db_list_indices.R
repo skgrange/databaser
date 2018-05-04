@@ -2,8 +2,6 @@
 #' 
 #' @param con Database connection. 
 #' 
-#' @param table A vector of table names. If unused, all tables will be queried.  
-#' 
 #' @author Stuart K. Grange
 #' 
 #' @export
@@ -28,7 +26,7 @@ db_list_indices <- function(con) {
 }
 
 
-# Ony for SQLite
+# For SQLite
 db_list_indices_worker <- function(con, table) {
   
   # Build statement

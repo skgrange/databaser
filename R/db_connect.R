@@ -139,6 +139,12 @@ db_connect <- function(file, database, config = TRUE, foreign_keys = FALSE) {
 }
 
 
+#' Function to close a database connection cleanly.  
+#' 
+#' @param con An active database connection.
+#' 
+#' @return Invisible.  
+#' 
 #' @export
 db_disconnect <- function(con) quiet(DBI::dbDisconnect(con))
 

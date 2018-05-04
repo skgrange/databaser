@@ -14,22 +14,21 @@
 read_sql <- function(file) {
   
   # Load file
-  sql <- readLines(file, warn = FALSE)
+  sql <- readLines(file, warn = FALSE, encoding = "UTF-8")
   
   # Drop comments
   sql <- grep("--", sql, invert = TRUE, value = TRUE)
   
   # Clean
   sql <- stringr::str_c(sql, collapse = "")
-  sql <- threadr::str_trim_many_spaces(sql)
+  sql <- stringr::str_squish(sql)
   
   # Split based on ;
-  sql <- unlist(stringr::str_split(sql, ";"))
+  sql <- stringr::str_split(sql, ";")[[1]]
   
   # Drop empty statements
-  sql <- sql[!ifelse(sql == "", TRUE, FALSE)]
+  sql <- sql[sql != ""]
   
-  # Return
-  sql
+  return(sql)
   
 }

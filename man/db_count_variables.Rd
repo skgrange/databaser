@@ -6,6 +6,12 @@
 \usage{
 db_count_variables(con, table = NA)
 }
+\arguments{
+\item{con}{Database connection.}
+
+\item{table}{Table to get variables for. If \code{NA}, all tables will be 
+queried.}
+}
 \description{
 Function to count variables/columns/fields in a database table.
 }

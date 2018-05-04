@@ -8,8 +8,6 @@ db_list_indices(con)
 }
 \arguments{
 \item{con}{Database connection.}
-
-\item{table}{A vector of table names. If unused, all tables will be queried.}
 }
 \description{
 Function to list indices for a database tables.

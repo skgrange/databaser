@@ -7,8 +7,9 @@
 **databaser** is an R package which extends [**DBI**](https://github.com/rstats-db/DBI), [**RSQLite**](https://github.com/rstats-db/RSQLite), [**RMySQL**](https://github.com/rstats-db/RMySQL), and [**RPostgreSQL**](https://code.google.com/archive/p/rpostgresql/). **databaser**  keeps things consistent with functions starting with `db_`. **databaser** contains many simple wrappers which are sometimes undesirable, but they are included for consistency. 
 
   - Functions include: 
+  
     - `db_connect`
-    - `db_send` and `db_execute` (both vectorised)
+    - `db_execute` (vectorised)
     - `db_get`
     - `db_insert`
     - `db_contents`
