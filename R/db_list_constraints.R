@@ -9,10 +9,17 @@
 #' @export
 db_list_constraints <- function(con) {
   
-  if (db.class(con) == "postgres")
+  if (db.class(con) == "postgres") {
+    
     df <- db_get(con, "SELECT * FROM information_schema.constraint_column_usage")
     
-  # Return
-  df
+  } else {
+    
+    df <- data.frame()
+    warning("Database not supported...", call. = FALSE)
+    
+  }
+  
+  return(df)
   
 }
