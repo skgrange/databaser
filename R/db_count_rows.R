@@ -69,7 +69,7 @@ db_count_rows_worker <- function(con, table, estimate) {
   # Use statement
   df <- tryCatch({
     
-    db_get(con, sql)
+    db_get(con, stringr::str_squish(sql))
     
   }, error = function(e) {
     

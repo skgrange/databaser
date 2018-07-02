@@ -1,8 +1,8 @@
 Package: databaser
 Type: Package
 Title: Tools to Keep Database Interaction Easy and Consistent
-Version: 0.2.0
-Date: 2018-06-12
+Version: 0.2.01
+Date: 2018-07-02
 Authors@R: person("Stuart K.", "Grange", email = "stuart.grange@york.ac.uk", 
     role = c("cre", "aut"))
 Maintainer: Stuart K. Grange <s.k.grange@gmail.com>
