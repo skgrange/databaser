@@ -22,29 +22,31 @@ db_size <- function(con, unit = "mb") {
     
     x <- threadr::file_size(con@dbname, unit = "none")
     
-    # Convert unit
-    if (unit == "mb") x <- x / 1e+06
-    if (unit == "gb") x <- x / 1e+09
-    
   } else if (db.class(con) == "postgres") {
     
-    # x <- db_get(con, "SELECT SUM(pg_database_size(oid)) FROM pg_database")[, 1]
-    
-    # Build query, requires name
-    sql_select <- str_c(
-      "SELECT pg_size_pretty(pg_database_size('", 
-      db_name(con), 
-      "'))"
+    x <- suppressWarnings(
+      db_get(con, "SELECT SUM(pg_database_size(oid)) FROM pg_database")[, 1]
     )
     
-    # Query
-    x <- db_get(con, sql_select)[, ]
+    if (is.null(x)) {
+      
+      # Build query, requires name
+      sql_select <- str_c("SELECT pg_database_size('", db_name(con), "')")
+      
+      # Query
+      x <- db_get(con, sql_select)[, ]
+      
+    }
     
   } else {
     
     stop("Not implemented...", call. = FALSE)
     
   }
+  
+  # Convert unit
+  if (unit == "mb") x <- x / 1e+06
+  if (unit == "gb") x <- x / 1e+09
   
   # Return
   return(x)
