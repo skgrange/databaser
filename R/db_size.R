@@ -7,8 +7,7 @@
 #' 
 #' @param con Database connection. 
 #' 
-#' @param unit Measurement unit for SQLite databases. Default is \code{"mb"} for
-#' megabytes. 
+#' @param unit Measurement unit. Default is \code{"mb"} for megabytes. 
 #' 
 #' @return Numeric vector. 
 #' 
@@ -24,19 +23,11 @@ db_size <- function(con, unit = "mb") {
     
   } else if (db.class(con) == "postgres") {
     
-    x <- suppressWarnings(
-      db_get(con, "SELECT SUM(pg_database_size(oid)) FROM pg_database")[, 1]
-    )
+    # Build query, requires name
+    sql_select <- str_c("SELECT pg_database_size('", db_name(con), "')")
     
-    if (is.null(x)) {
-      
-      # Build query, requires name
-      sql_select <- str_c("SELECT pg_database_size('", db_name(con), "')")
-      
-      # Query
-      x <- db_get(con, sql_select)[, ]
-      
-    }
+    # Query
+    x <- db_get(con, sql_select)[, ]
     
   } else {
     

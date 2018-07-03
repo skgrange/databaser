@@ -9,8 +9,7 @@ db_size(con, unit = "mb")
 \arguments{
 \item{con}{Database connection.}
 
-\item{unit}{Measurement unit for SQLite databases. Default is \code{"mb"} for
-megabytes.}
+\item{unit}{Measurement unit. Default is \code{"mb"} for megabytes.}
 }
 \value{
 Numeric vector.
