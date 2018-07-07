@@ -11,12 +11,15 @@
 #' 
 #' @param ... Other parameters passed on to methods.  
 #' 
-#' @param progress Type of progress bar to display. Default is \code{"none"}. 
+#' @param progress Type of progress bar to display. 
 #' 
 #' @return Invisible.
 #' 
 #' @export
 db_execute <- function(con, statement, ..., progress = "none") {
+  
+  # # Set progress bar off if verbose
+  # if (verbose) progress <- "none"
   
   # Do
   plyr::l_ply(
@@ -28,3 +31,11 @@ db_execute <- function(con, statement, ..., progress = "none") {
   # No return
   
 }
+
+
+# db_execute_worker <- function(con, x, verbose, ...) {
+#   
+#   if (verbose) message(x)
+#   DBI::dbExecute(con, x, ...)
+#   
+# }

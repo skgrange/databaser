@@ -13,7 +13,7 @@ db_execute(con, statement, ..., progress = "none")
 
 \item{...}{Other parameters passed on to methods.}
 
-\item{progress}{Type of progress bar to display. Default is \code{"none"}.}
+\item{progress}{Type of progress bar to display.}
 }
 \value{
 Invisible.

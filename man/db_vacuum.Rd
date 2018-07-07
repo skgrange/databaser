@@ -5,9 +5,9 @@
 \alias{db_optimise}
 \title{Functions to vacuum, analyse, and optimise database tables.}
 \usage{
-db_vacuum(con, table)
+db_vacuum(con, table = NA)
 
-db_optimise(con, table)
+db_optimise(con, table = NA)
 }
 \arguments{
 \item{con}{Database connection.}
@@ -15,7 +15,7 @@ db_optimise(con, table)
 \item{table}{Database table.}
 }
 \value{
-Invisible or data frame if assigned.
+Invisible data frame.
 }
 \description{
 The PostgreSQL statement uses \code{VACUUM (VERBOSE)}, the MySQL statement

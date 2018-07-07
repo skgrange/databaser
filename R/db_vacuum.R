@@ -10,7 +10,7 @@
 #' 
 #' @param table Database table. 
 #' 
-#' @return Invisible or data frame if assigned. 
+#' @return Invisible data frame. 
 #' 
 #' @examples 
 #' \dontrun{
@@ -21,26 +21,33 @@
 #' }
 #' 
 #' @export
-db_vacuum <- function(con, table) {
+db_vacuum <- function(con, table = NA) {
   
   # Get things pre-vacuum
   date_pre <- Sys.time()
   size_pre <- db_size(con)
   
-  if (db.class(con) == "postgres")
-    quiet(db_execute(con, stringr::str_c("VACUUM (VERBOSE) ", table)))
-  
-  if (db.class(con) == "mysql") {
+  if (db.class(con) == "postgres") {
+    
+    # Defalt to all tables
+    if (is.na(table[1])) table <- db_list_tables(con)
+    
+    # Do
+    db_execute(con, stringr::str_c("VACUUM (VERBOSE) ", table))
+    
+  } else if (db.class(con) == "mysql") {
     
     # Catch the reserved verbs
     table <- stringr::str_c("`", table, "`")
     
     # Optimise
-    quiet(db_execute(con, stringr::str_c("OPTIMIZE TABLE ", table)))
+    db_execute(con, stringr::str_c("OPTIMIZE TABLE ", table))
+    
+  } else if (db.class(con) == "sqlite") {
+    
+    db_execute(con, "VACUUM")
     
   }
-  
-  if (db.class(con) == "sqlite") quiet(db_execute(con, "VACUUM"))
   
   # Get things post-vacuum
   date_post <- Sys.time()

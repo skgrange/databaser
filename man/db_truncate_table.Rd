@@ -4,19 +4,23 @@
 \alias{db_truncate_table}
 \title{Function to run a \code{TRUNCATE TABLE} statement for a database table.}
 \usage{
-db_truncate_table(con, table)
+db_truncate_table(con, table, cascade = FALSE)
 }
 \arguments{
 \item{con}{Database connection.}
 
 \item{table}{Table to remove all data from.}
+
+\item{cascade}{Should the \code{TRUNCATE} statement be used with 
+\code{CASCADE}? Using \code{cascade} will delete relations which are 
+dependent on \code{table}.}
 }
 \value{
 Invisible.
 }
 \description{
-Beware that this function will remove the contents of a database table so use
-with caution.
+Beware that this function will remove the contents of a database table, and
+possibly other tables so use with caution.
 }
 \author{
 Stuart K. Grange
