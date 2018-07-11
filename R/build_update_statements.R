@@ -12,7 +12,7 @@
 #' 
 #' @author Stuart K. Grange
 #' 
-#' @return Invisible, a database table update. 
+#' @return Character vector with a length of nrow(df). 
 #' 
 #' @export
 build_update_statements <- function(table, df, where = NA, squish = FALSE) {
