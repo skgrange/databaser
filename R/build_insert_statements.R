@@ -22,8 +22,7 @@ build_insert_statements <- function(table, df, squish = FALSE) {
   insert_into <- str_c("INSERT INTO ", table, " (", insert_into, ")")
   
   # Prepare data frame
-  df <- dplyr::mutate_if(df, is.character, dplyr::funs(str_c("'", ., "'")))
-  df <- dplyr::mutate_all(df, dplyr::funs(ifelse(is.na(.), "NULL", .)))
+  df <- prepare_data_frame_for_sql(df)
   
   # Collapse rows and create values piece of sql string
   sql <- tidyr::unite(df, "values", 1:ncol(df), sep = ", ") %>% 

@@ -31,7 +31,7 @@ build_update_statements <- function(table, df, where = NA, squish = FALSE) {
     sql_where <- str_c(" WHERE ", sql_where)
    
     # Drop where variable from data to be used for update statements
-    df <- df[, setdiff(names(df), where)]
+    df <- df[, setdiff(names(df), where), drop = FALSE]
     
   }
   
@@ -70,11 +70,8 @@ build_sql_pairs <- function(df, sep) {
   sep <- ifelse(sep == "AND", " AND ", sep)
   sep <- ifelse(sep == ",", ", ", sep)
   
-  # Add quotes if character
-  df <- dplyr::mutate_if(df, is.character, dplyr::funs(str_c("'", ., "'")))
-  
-  # Switch nas to sql null
-  df <- dplyr::mutate_all(df, dplyr::funs(ifelse(is.na(.), "NULL", .)))
+  # Format for database table
+  df <- prepare_data_frame_for_sql(df)
   
   # Get named vector for sql keys
   keys <- names(df)
@@ -85,6 +82,26 @@ build_sql_pairs <- function(df, sep) {
     purrr::map2_dfr(keys, ., ~str_c(.x, " = ", .y)) %>% 
     tidyr::unite(., "sql", 1:ncol(.), sep = sep) %>% 
     pull()
+  
+  return(df)
+  
+}
+
+
+prepare_data_frame_for_sql <- function(df) {
+  
+  # Catch single quotes
+  df <- dplyr::mutate_if(
+    df, 
+    is.character, 
+    dplyr::funs(stringr::str_replace_all(., "'", "''"))
+  )
+  
+  # Add single quotes if character
+  df <- dplyr::mutate_if(df, is.character, dplyr::funs(str_c("'", ., "'")))
+  
+  # Switch nas to sql null
+  df <- dplyr::mutate_all(df, dplyr::funs(ifelse(is.na(.), "NULL", .)))
   
   return(df)
   
