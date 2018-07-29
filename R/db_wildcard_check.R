@@ -6,22 +6,19 @@
 #' 
 #' @param type Type of wildcards to detect. Only SQL is implemented.
 #' 
-#' @return Invisible, called for the side effect of an error.  
+#' @return Invisible \code{x}.
 #' 
 #' @export
 db_wildcard_check <- function(x, type = "sql") {
   
-  # Collapse
-  x <- str_c(x, collapse = " ")
-  
   # Check for sql wildcard
   if (type == "sql") {
     
-    if (grepl("%|\\*|\\?", x)) 
+    if (grepl("%|\\*|\\?", str_c(x, collapse = " "))) 
       stop("Inputs cannot contain SQL wildcards...", call. = FALSE)
     
   }
   
-  # No return
+  return(invisible(x))
   
 }

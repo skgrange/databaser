@@ -4,7 +4,6 @@
 \name{reexports}
 \alias{reexports}
 \alias{db_list_tables}
-\alias{reexports}
 \alias{db_has_table}
 \title{Objects exported from other packages}
 \keyword{internal}

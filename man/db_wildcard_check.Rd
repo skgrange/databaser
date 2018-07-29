@@ -12,7 +12,7 @@ db_wildcard_check(x, type = "sql")
 \item{type}{Type of wildcards to detect. Only SQL is implemented.}
 }
 \value{
-Invisible, called for the side effect of an error.
+Invisible \code{x}.
 }
 \description{
 Function to test for wildcards and then raise an error if found.
