@@ -14,7 +14,7 @@ db_wildcard_check <- function(x, type = "sql") {
   # Check for sql wildcard
   if (type == "sql") {
     
-    if (grepl("%|\\*|\\?", str_c(x, collapse = " "))) 
+    if (grepl("%|\\*", str_c(x, collapse = " "))) 
       stop("Inputs cannot contain SQL wildcards...", call. = FALSE)
     
   }
