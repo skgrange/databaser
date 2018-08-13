@@ -2,7 +2,7 @@
 % Please edit documentation in R/db_check_integrity.R
 \name{db_check_integrity}
 \alias{db_check_integrity}
-\title{Function to test database integrity.}
+\title{Function to test a SQLite database's integrity.}
 \usage{
 db_check_integrity(con)
 }
@@ -10,7 +10,7 @@ db_check_integrity(con)
 \item{con}{Database connection.}
 }
 \value{
-Data frame.
+Character vector.
 }
 \description{
 \code{db_check_integrity} is only implemented for SQLite databases.

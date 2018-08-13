@@ -15,12 +15,6 @@ NULL
 NULL
 
 
-#' @importFrom dplyr db_list_tables
-#' 
-#' @export
-dplyr::db_list_tables
-
-
 #' @importFrom dplyr db_has_table
 #' 
 #' @export

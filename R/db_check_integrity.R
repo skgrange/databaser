@@ -1,10 +1,10 @@
-#' Function to test database integrity. 
+#' Function to test a SQLite database's integrity. 
 #' 
 #' \code{db_check_integrity} is only implemented for SQLite databases. 
 #' 
 #' @param con Database connection. 
 #' 
-#' @return Data frame. 
+#' @return Character vector. 
 #' 
 #' @author Stuart K. Grange
 #' 
@@ -13,14 +13,15 @@ db_check_integrity <- function(con) {
   
   if (db.class(con) == "sqlite") {
     
-    df <- db_get(con, "PRAGMA integrity_check")
+    x <- db_get(con, "PRAGMA integrity_check")[,]
     
   } else {
     
-    stop("Not implemented...", call. = FALSE)
+    warning("Not implemented...", call. = FALSE)
+    x <- as.character()
     
   }
     
-  return(df)
+  return(x)
   
 }
