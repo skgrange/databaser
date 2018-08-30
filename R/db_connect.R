@@ -77,8 +77,7 @@ db_connect <- function(file, database, config = TRUE, foreign_keys = FALSE) {
   })
   
   # If config is TRUE and the file is not json, attempt SQLite connection
-  if (any(grepl("lexical error", json, ignore.case = TRUE)) | 
-    any(grepl("sqlite", json, ignore.case = TRUE))) {
+  if (any(grepl("lexical error|sqlite|parse error", json, ignore.case = TRUE))) {
     
     # Set config to false for SQLite databases
     config <- FALSE
@@ -103,9 +102,7 @@ db_connect <- function(file, database, config = TRUE, foreign_keys = FALSE) {
         password = json$password
       )
       
-    }
-    
-    if (grepl("postg", json$driver, ignore.case = TRUE)) {
+    } else if (grepl("postg", json$driver, ignore.case = TRUE)) {
       
       # Connect
       con <- DBI::dbConnect(
@@ -156,16 +153,12 @@ postgres_application_name <- function() {
   
   # Clean
   version <- list_version$version.string
-  version <- stringr::str_replace_all(version, "\\s*\\([^\\)]+\\)", "")
-  version <- stringr::str_replace(version, "version ", "")
-  
-  # name <- list_version$nickname
-  # version <- stringr::str_c(version, name, sep = " - ")
+  version <- stringr::str_remove_all(version, "\\s*\\([^\\)]+\\)")
+  version <- stringr::str_remove(version, "version ")
   
   # Add package name too
   version <- stringr::str_c(version, " with RPostgreSQL")
   
-  # Return
-  version
+  return(version)
   
 }
