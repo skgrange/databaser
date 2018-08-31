@@ -11,6 +11,9 @@ db_list_variables(con, table)
 
 \item{table}{Table to list variables/columns/fields.}
 }
+\value{
+Character vector.
+}
 \description{
 \code{db_list_variables} is a wrapper for \code{DBI::dbListFields}.
 }

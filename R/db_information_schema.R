@@ -20,7 +20,6 @@ db_information_schema <- function(con) {
     
   }
   
-  # Return
-  df
+  return(df)
   
 }

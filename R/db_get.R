@@ -10,6 +10,8 @@
 #' 
 #' @author Stuart K. Grange
 #' 
+#' @return Tibble. 
+#' 
 #' @export
 db_get <- function(con, statement, warn = TRUE) {
   
@@ -25,7 +27,9 @@ db_get <- function(con, statement, warn = TRUE) {
     
   }
   
-  # Return
-  df
+  # Always a tibble
+  df <- dplyr::as_tibble(df)
+  
+  return(df)
   
 }

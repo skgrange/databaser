@@ -26,7 +26,6 @@ db_name <- function(con, extension = TRUE) {
     
   }
   
-  # Return
-  x 
+  return(x)
   
 }

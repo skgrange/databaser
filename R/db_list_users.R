@@ -31,7 +31,6 @@ db_list_users <- function(con) {
   if (grepl("sqlite", class(con), ignore.case = TRUE))
     stop("Not implemented.", call. = FALSE)
   
-  # Return
-  df
+  return(df)
   
 }

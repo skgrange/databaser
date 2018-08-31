@@ -11,6 +11,9 @@ db_read_table(con, table)
 
 \item{table}{Table to read.}
 }
+\value{
+Tibble.
+}
 \description{
 \code{db_read_table} is a wrapper for \code{DBI::dbReadTable}.
 }

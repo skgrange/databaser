@@ -3,10 +3,14 @@
 #' \code{db_read_table} is a wrapper for \code{DBI::dbReadTable}. 
 #' 
 #' @param con Database connection. 
+#' 
 #' @param table Table to read. 
 #' 
+#' @return Tibble. 
+#' 
 #' @export
-db_read_table <- function(con, table) DBI::dbReadTable(con, table)
+db_read_table <- function(con, table) 
+  dplyr::as_tibble(DBI::dbReadTable(con, table))
 
 
 #' Function to list all variables/columns/fields in a database table. 
@@ -14,7 +18,10 @@ db_read_table <- function(con, table) DBI::dbReadTable(con, table)
 #' \code{db_list_variables} is a wrapper for \code{DBI::dbListFields}. 
 #' 
 #' @param con Database connection. 
+#' 
 #' @param table Table to list variables/columns/fields. 
+#' 
+#' @return Character vector. 
 #' 
 #' @export
 db_list_variables <- function(con, table) DBI::dbListFields(con, table)
@@ -22,7 +29,7 @@ db_list_variables <- function(con, table) DBI::dbListFields(con, table)
 
 #' Function to list results for a database connection. 
 #' 
-#' @param con Database connection.
+#' @param con Database connection. 
 #' 
 #' @export
 db_list_results <- function(con) DBI::dbListResults(con)[[1]]

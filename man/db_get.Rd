@@ -13,6 +13,9 @@ db_get(con, statement, warn = TRUE)
 
 \item{warn}{Should the function return warnings?}
 }
+\value{
+Tibble.
+}
 \description{
 \code{db_get} is a wrapper for \code{DBI::dbGetQuery}.
 }

@@ -44,11 +44,7 @@ db_variables_worker <- function(con, table) {
   })
   
   # Make data frame
-  df <- data.frame(
-    table = table, 
-    variable = variables,
-    stringsAsFactors = FALSE
-  )
+  df <- data_frame(table = table, variable = variables)
   
   return(df)
   
