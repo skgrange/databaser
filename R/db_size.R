@@ -27,7 +27,7 @@ db_size <- function(con, unit = "mb") {
     sql_select <- str_c("SELECT pg_database_size('", db_name(con), "')")
     
     # Query
-    x <- db_get(con, sql_select)[, ]
+    x <- db_get(con, sql_select)[, , drop = TRUE]
     
   } else {
     
