@@ -27,7 +27,7 @@ build_update_statements <- function(table, df, where = NA, squish = FALSE) {
   if (!is.na(where[1])) {
     
     # Build where clause
-    sql_where <- build_sql_pairs(df[, where], sep = "and")
+    sql_where <- build_sql_pairs(df[, where, drop = FALSE], sep = "and")
     sql_where <- str_c(" WHERE ", sql_where)
    
     # Drop where variable from data to be used for update statements
