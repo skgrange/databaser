@@ -17,6 +17,9 @@ build_insert_statements <- function(table, df, squish = FALSE) {
   # Check inputs
   stopifnot(length(table) == 1)
   
+  # Return empty string if input is empty
+  if (nrow(df) == 0) return(as.character())
+  
   # No quoting used for names
   insert_into <- str_c(names(df), collapse = ", ")
   insert_into <- str_c("INSERT INTO ", table, " (", insert_into, ")")

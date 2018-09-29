@@ -20,6 +20,9 @@ build_update_statements <- function(table, df, where = NA, squish = FALSE) {
   # Check inputs
   stopifnot(length(table) == 1)
   
+  # Return empty string if input is empty
+  if (nrow(df) == 0) return(as.character())
+  
   if (is.na(where[1]) && nrow(df) != 1)
     stop("If `where` is not used, input must have a single row...", call. = FALSE)
   
