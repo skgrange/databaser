@@ -15,6 +15,9 @@ in \code{con} will be queried.}
 \item{estimate}{Only for PostgreSQL, should the table count estimate be used? 
 Default is \code{FALSE}.}
 }
+\value{
+Tibble.
+}
 \description{
 The \code{row_count} variable will be a numeric value rather than an integer 
 to avoid integer overflow issues for large tables.

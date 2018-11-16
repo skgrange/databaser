@@ -13,6 +13,8 @@
 #' @param estimate Only for PostgreSQL, should the table count estimate be used? 
 #' Default is \code{FALSE}. 
 #' 
+#' @return Tibble.
+#' 
 #' @export
 db_count_rows <- function(con, table = NA, estimate = FALSE) {
   
@@ -73,18 +75,14 @@ db_count_rows_worker <- function(con, table, estimate) {
     
   }, error = function(e) {
     
-    data.frame(
-      row_count = NA,
-      stringsAsFactors = FALSE
-    )
+    data_frame(row_count = NA)
     
   })
 
   # Add table and order variables
-  df <- data.frame(
+  df <- data_frame(
     table, 
-    row_count = df$row_count,
-    stringsAsFactors = FALSE
+    row_count = df$row_count
   )
   
   return(df)
