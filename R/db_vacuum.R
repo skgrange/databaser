@@ -10,7 +10,9 @@
 #' 
 #' @param table Database table. 
 #' 
-#' @return Invisible data frame. 
+#' @param verbose Should the function give messages? 
+#' 
+#' @return Invisible data frame.
 #' 
 #' @examples 
 #' \dontrun{
@@ -21,11 +23,14 @@
 #' }
 #' 
 #' @export
-db_vacuum <- function(con, table = NA) {
+db_vacuum <- function(con, table = NA, verbose = FALSE) {
   
   # Get things pre-vacuum
   date_pre <- Sys.time()
   size_pre <- db_size(con)
+  
+  if (verbose) 
+    message(threadr::str_date_formatted(date_pre), ": Vacuuming database...")
   
   if (db.class(con) == "postgres") {
     
@@ -53,11 +58,10 @@ db_vacuum <- function(con, table = NA) {
   date_post <- Sys.time()
   size_post <- db_size(con)
     
-  df <- data.frame(
+  df <- data_frame(
     when = c("pre_vacuum", "post_vacuum"),
     date = c(date_pre, date_post),
-    size = c(size_pre, size_post),
-    stringsAsFactors = FALSE
+    size = c(size_pre, size_post)
   )
   
   return(invisible(df)) 

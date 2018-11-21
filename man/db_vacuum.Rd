@@ -5,14 +5,16 @@
 \alias{db_optimise}
 \title{Functions to vacuum, analyse, and optimise database tables.}
 \usage{
-db_vacuum(con, table = NA)
+db_vacuum(con, table = NA, verbose = FALSE)
 
-db_optimise(con, table = NA)
+db_optimise(con, table = NA, verbose = FALSE)
 }
 \arguments{
 \item{con}{Database connection.}
 
 \item{table}{Database table.}
+
+\item{verbose}{Should the function give messages?}
 }
 \value{
 Invisible data frame.
