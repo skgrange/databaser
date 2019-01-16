@@ -75,15 +75,12 @@ db_count_rows_worker <- function(con, table, estimate) {
     
   }, error = function(e) {
     
-    data_frame(row_count = NA)
+    tibble(row_count = NA)
     
   })
 
   # Add table and order variables
-  df <- data_frame(
-    table, 
-    row_count = df$row_count
-  )
+  df <- tibble(table, row_count = df$row_count)
   
   return(df)
   

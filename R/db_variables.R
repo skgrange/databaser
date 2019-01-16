@@ -43,8 +43,8 @@ db_variables_worker <- function(con, table) {
     
   })
   
-  # Make data frame
-  df <- data_frame(table = table, variable = variables)
+  # Make tibble
+  df <- tibble(table = table, variable = variables)
   
   return(df)
   

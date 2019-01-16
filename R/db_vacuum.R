@@ -58,7 +58,7 @@ db_vacuum <- function(con, table = NA, verbose = FALSE) {
   date_post <- Sys.time()
   size_post <- db_size(con)
     
-  df <- data_frame(
+  df <- tibble(
     when = c("pre_vacuum", "post_vacuum"),
     date = c(date_pre, date_post),
     size = c(size_pre, size_post)
