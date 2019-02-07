@@ -13,7 +13,7 @@
 #' 
 #' @param progress Type of progress bar to display. 
 #' 
-#' @return Invisible.
+#' @return Invisible \code{con}. 
 #' 
 #' @export
 db_execute <- function(con, statement, ..., progress = "none") {
@@ -28,7 +28,7 @@ db_execute <- function(con, statement, ..., progress = "none") {
     .progress = progress
   )
   
-  # No return
+  return(invisible(con))
   
 }
 

@@ -16,7 +16,7 @@ db_execute(con, statement, ..., progress = "none")
 \item{progress}{Type of progress bar to display.}
 }
 \value{
-Invisible.
+Invisible \code{con}.
 }
 \description{
 \code{db_execute} is a wrapper for \code{DBI::dbExecute} but is vectorised 
