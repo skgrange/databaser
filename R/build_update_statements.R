@@ -12,7 +12,7 @@
 #' 
 #' @author Stuart K. Grange
 #' 
-#' @return Character vector with a length of nrow(df). 
+#' @return Character vector with a length of \code{nrow(df)}. 
 #' 
 #' @export
 build_update_statements <- function(table, df, where = NA, squish = FALSE) {
@@ -23,8 +23,9 @@ build_update_statements <- function(table, df, where = NA, squish = FALSE) {
   # Return empty string if input is empty
   if (nrow(df) == 0) return(as.character())
   
-  if (is.na(where[1]) && nrow(df) != 1)
+  if (is.na(where[1]) && nrow(df) != 1) {
     stop("If `where` is not used, input must have a single row...", call. = FALSE)
+  }
   
   # Build where clauses
   if (!is.na(where[1])) {
@@ -49,10 +50,8 @@ build_update_statements <- function(table, df, where = NA, squish = FALSE) {
   
   # Remove some whitespace to make statement smaller
   if (squish) {
-    
     sql_update <- str_replace_all(sql_update, ", ", ",")
     sql_update <- str_replace_all(sql_update, " = ", "=")
-    
   }
   
   return(sql_update)
@@ -67,8 +66,9 @@ build_sql_pairs <- function(df, sep) {
   sep <- stringr::str_trim(sep)
   sep <- stringr::str_to_upper(sep)
   
-  if (!sep %in% c(",", "AND"))
+  if (!sep %in% c(",", "AND")) {
     stop("`sep` must be one of 'AND' or ','...", call. = FALSE)
+  }
   
   sep <- ifelse(sep == "AND", " AND ", sep)
   sep <- ifelse(sep == ",", ", ", sep)
@@ -94,17 +94,13 @@ build_sql_pairs <- function(df, sep) {
 prepare_data_frame_for_sql <- function(df) {
   
   # Catch single quotes
-  df <- dplyr::mutate_if(
-    df, 
-    is.character, 
-    dplyr::funs(stringr::str_replace_all(., "'", "''"))
-  )
+  df <- dplyr::mutate_if(df, is.character, ~str_replace_all(., "'", "''"))
   
   # Add single quotes if character
-  df <- dplyr::mutate_if(df, is.character, dplyr::funs(str_c("'", ., "'")))
+  df <- dplyr::mutate_if(df, is.character, ~str_c("'", ., "'"))
   
   # Switch nas to sql null
-  df <- dplyr::mutate_all(df, dplyr::funs(ifelse(is.na(.), "NULL", .)))
+  df <- dplyr::mutate_all(df, ~ifelse(is.na(.), "NULL", .))
   
   return(df)
   

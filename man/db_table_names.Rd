@@ -5,23 +5,20 @@
 \title{Function to get the names of database table and produce a data frame with 
 zero rows.}
 \usage{
-db_table_names(con, table)
+db_table_names(con, table, as_tibble = FALSE)
 }
 \arguments{
 \item{con}{Database connection.}
 
 \item{table}{Database table.}
+
+\item{as_tibble}{Should the return be a tibble?}
 }
 \value{
-Data frame with no observations, only headers.
+Data frame with zero rows.
 }
 \description{
 \code{db_table_names} is useful when preparing a data frame for a SQL insert.
-If a database table is empty, this function can fail on some databases. To-do:
-catch this.
-}
-\seealso{
-\code{\link{dbWriteTable}}, \code{\link{rbind.fill}}
 }
 \author{
 Stuart K. Grange

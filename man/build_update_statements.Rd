@@ -18,7 +18,7 @@ clause. If not used, only a single row data frame can be used.}
 make the SQL statement shorter?}
 }
 \value{
-Character vector with a length of nrow(df).
+Character vector with a length of \code{nrow(df)}.
 }
 \description{
 Function to build SQL \code{WHERE} statements from an input data frame.
