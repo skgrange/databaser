@@ -4,15 +4,18 @@
 \alias{db_drop_table}
 \title{Function to drop a table within a database.}
 \usage{
-db_drop_table(con, table)
+db_drop_table(con, table, cascade = FALSE)
 }
 \arguments{
 \item{con}{Database connection.}
 
 \item{table}{Table to drop.}
+
+\item{cascade}{Should the \code{DROP TABLE} statement also use a 
+\code{CASCADE} clause to force the table drop?}
 }
 \value{
-Invisible.
+Invisible, \code{con}.
 }
 \description{
 Function to drop a table within a database.
