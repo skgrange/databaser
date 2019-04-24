@@ -4,16 +4,17 @@
 \alias{db_count_rows}
 \title{Function to get row counts from database tables.}
 \usage{
-db_count_rows(con, table = NA, estimate = FALSE)
+db_count_rows(con, table = NA, estimate = FALSE, verbose = FALSE)
 }
 \arguments{
 \item{con}{Database connection.}
 
-\item{table}{Table name in \code{con}. If \code{table} is unknown, all tables
+\item{table}{Table name in \code{con}. If \code{table} is \code{NA}, all tables
 in \code{con} will be queried.}
 
-\item{estimate}{Only for PostgreSQL, should the table count estimate be used? 
-Default is \code{FALSE}.}
+\item{estimate}{Only for PostgreSQL, should the table count estimate be used?}
+
+\item{verbose}{Should the function give messages?}
 }
 \value{
 Tibble.

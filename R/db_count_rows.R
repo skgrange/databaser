@@ -7,27 +7,33 @@
 #' 
 #' @param con Database connection.
 #' 
-#' @param table Table name in \code{con}. If \code{table} is unknown, all tables
+#' @param table Table name in \code{con}. If \code{table} is \code{NA}, all tables
 #' in \code{con} will be queried. 
 #' 
-#' @param estimate Only for PostgreSQL, should the table count estimate be used? 
-#' Default is \code{FALSE}. 
+#' @param estimate Only for PostgreSQL, should the table count estimate be used?
+#' 
+#' @param verbose Should the function give messages?
 #' 
 #' @return Tibble.
 #' 
 #' @export
-db_count_rows <- function(con, table = NA, estimate = FALSE) {
+db_count_rows <- function(con, table = NA, estimate = FALSE, verbose = FALSE) {
   
   # If no table is selected, do them all
   if (is.na(table[1])) table <- db_list_tables(con)
   
-  # Check
+  # Check database
   if (length(table) == 0) stop("Database has no tables...", call. = FALSE)
   
   # Do
   df <- purrr::map_dfr(
     table, 
-    ~db_count_rows_worker(con, table = .x, estimate = estimate)
+    ~db_count_rows_worker(
+      con, 
+      table = .x, 
+      estimate = estimate, 
+      verbose = verbose
+    )
   )
   
   return(df)
@@ -36,7 +42,9 @@ db_count_rows <- function(con, table = NA, estimate = FALSE) {
 
 
 # Function to get the row counts
-db_count_rows_worker <- function(con, table, estimate) {
+db_count_rows_worker <- function(con, table, estimate, verbose) {
+  
+  if (verbose) message(threadr::date_message(), "Counting rows in `", table, "`...")
   
   if (estimate) {
     
@@ -58,25 +66,19 @@ db_count_rows_worker <- function(con, table, estimate) {
     
     # Do not use the cast function here
     if (db.class(con) == "mysql") {
-      
       sql <- str_c(
         "SELECT COUNT(*) AS row_count 
          FROM ", table
       )
-      
     }
       
   }
   
   # Use statement
   df <- tryCatch({
-    
     db_get(con, stringr::str_squish(sql))
-    
   }, error = function(e) {
-    
     tibble(row_count = NA)
-    
   })
 
   # Add table and order variables

@@ -10,6 +10,8 @@
 #' @param print Should the current row counts be printed after the database
 #' queries? 
 #' 
+#' @param verbose Should the function give messages?
+#' 
 #' @seealso \code{\link{db_count_rows}}, \code{\link{db_details}}
 #' 
 #' @author Stuart K. Grange.
@@ -18,7 +20,7 @@
 #' 
 #' @export
 db_count_rows_insert <- function(con, table = "row_counts", estimate = FALSE, 
-                                 print = FALSE) {
+                                 print = FALSE, verbose = FALSE) {
   
   # Get start date
   date_system <- as.numeric(lubridate::now())
@@ -30,7 +32,12 @@ db_count_rows_insert <- function(con, table = "row_counts", estimate = FALSE,
   # tables_db <- setdiff(tables_db, table)
   
   # Get counts of all tables
-  df <- databaser::db_count_rows(con, table = tables_db, estimate = estimate) %>% 
+  df <- databaser::db_count_rows(
+    con, 
+    table = tables_db, 
+    estimate = estimate,
+    verbose = verbose
+  ) %>% 
     mutate(system = threadr::hostname(),
            date = date_system) %>% 
     select(system,
@@ -45,6 +52,7 @@ db_count_rows_insert <- function(con, table = "row_counts", estimate = FALSE,
   }
   
   # Insert into database
+  if (verbose) message(threadr::date_message(), "Inserting row counts data...")
   databaser::db_insert(con, table, df, replace = FALSE)
 
   return(invisible(con))
