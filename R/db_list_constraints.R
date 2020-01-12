@@ -6,18 +6,16 @@
 #' 
 #' @author Stuart K. Grange
 #' 
+#' @return Tibble. 
+#' 
 #' @export
 db_list_constraints <- function(con) {
   
   if (db.class(con) == "postgres") {
-    
     df <- db_get(con, "SELECT * FROM information_schema.constraint_column_usage")
-    
   } else {
-    
-    df <- data.frame()
+    df <- tibble()
     warning("Database not supported...", call. = FALSE)
-    
   }
   
   return(df)
