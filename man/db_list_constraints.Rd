@@ -9,6 +9,9 @@ db_list_constraints(con)
 \arguments{
 \item{con}{Database connection.}
 }
+\value{
+Tibble.
+}
 \description{
 \code{db_list_constraints} only supports PostgreSQL databases at present.
 }

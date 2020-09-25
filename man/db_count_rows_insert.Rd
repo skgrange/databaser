@@ -4,8 +4,13 @@
 \alias{db_count_rows_insert}
 \title{Function to get row counts and insert into a database table.}
 \usage{
-db_count_rows_insert(con, table = "row_counts", estimate = FALSE,
-  print = FALSE, verbose = FALSE)
+db_count_rows_insert(
+  con,
+  table = "row_counts",
+  estimate = FALSE,
+  print = FALSE,
+  verbose = FALSE
+)
 }
 \arguments{
 \item{con}{Database connection.}

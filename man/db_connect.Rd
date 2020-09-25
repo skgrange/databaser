@@ -4,7 +4,7 @@
 \alias{db_connect}
 \title{Function to create a database connection with a \code{JSON} configuration file.}
 \usage{
-db_connect(file, database, config = TRUE, foreign_keys = FALSE)
+db_connect(file, database, config = TRUE, foreign_keys = TRUE)
 }
 \arguments{
 \item{file}{\code{JSON} file or string containing database connection 
@@ -19,7 +19,7 @@ attempt to connect to \code{file} directly. This is used for SQLite
 databases which require no configuration.}
 
 \item{foreign_keys}{A logical for SQLite databases where foreign keys should 
-be enforced. Default is \code{FALSE}. For other database types, this will be 
+be enforced. Default is \code{TRUE}. For other database types, this will be 
 ignored.}
 }
 \value{
@@ -37,11 +37,12 @@ not needed.
 If \code{db_connect} is attempted to be used with a file which is not 
 \code{JSON}, it will attempt to connect to an SQLite database, but it is 
 recommended that the \code{config} argument is set to \code{FALSE} in this 
-case.
+case. 
 
 MySQL, PostgreSQL, and SQLite connections are currently supported.
 }
 \examples{
+
 \dontrun{
 
 # Connect to an air quality database

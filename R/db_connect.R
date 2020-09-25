@@ -26,7 +26,7 @@
 #' databases which require no configuration. 
 #' 
 #' @param foreign_keys A logical for SQLite databases where foreign keys should 
-#' be enforced. Default is \code{FALSE}. For other database types, this will be 
+#' be enforced. Default is \code{TRUE}. For other database types, this will be 
 #' ignored. 
 #' 
 #' @author Stuart K. Grange
@@ -34,6 +34,7 @@
 #' @return Database connection. 
 #' 
 #' @examples
+#' 
 #' \dontrun{
 #' 
 #' # Connect to an air quality database
@@ -61,34 +62,30 @@
 #' }
 #' 
 #' @export
-db_connect <- function(file, database, config = TRUE, foreign_keys = FALSE) {
+db_connect <- function(file, database, config = TRUE, foreign_keys = TRUE) {
+  
+  # Could use mime type
+  # mime::guess_type(file)
   
   # Load configuration file
   json <- tryCatch({
-    
-    # Read
     jsonlite::fromJSON(file)
-    
   }, error = function(e) {
-    
     # Capture and return error text
     conditionMessage(e)
-    
   })
   
   # If config is TRUE and the file is not json, attempt SQLite connection
   if (any(grepl("lexical error|sqlite|parse error", json, ignore.case = TRUE))) {
-    
-    # Set config to false for SQLite databases
     config <- FALSE
-    
   }
   
   if (config) {
     
     # If json file has many database connection details, filter with argument
-    if (class(json) == "data.frame")
+    if (class(json) == "data.frame") {
       json <- json[json[, "database_name"] == database, ]
+    }
     
     # Create connection based on driver type
     if (grepl("mysql", json$driver, ignore.case = TRUE)) {

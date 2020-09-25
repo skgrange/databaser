@@ -11,6 +11,6 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{dplyr}{\code{\link[dplyr]{db_has_table}}}
+  \item{dplyr}{\code{\link[dplyr:backend_dbplyr]{db_has_table}}}
 }}
 
