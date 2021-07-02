@@ -18,8 +18,10 @@
 #' @export
 db_execute <- function(con, statement, ..., progress = "none") {
   
-  # # Set progress bar off if verbose
-  # if (verbose) progress <- "none"
+  # A switch for logical input
+  if (is.logical(progress)) {
+    progress <- "time"
+  }
   
   # Do
   plyr::l_ply(
@@ -31,11 +33,3 @@ db_execute <- function(con, statement, ..., progress = "none") {
   return(invisible(con))
   
 }
-
-
-# db_execute_worker <- function(con, x, verbose, ...) {
-#   
-#   if (verbose) message(x)
-#   DBI::dbExecute(con, x, ...)
-#   
-# }
