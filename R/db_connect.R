@@ -83,7 +83,7 @@ db_connect <- function(file, database, config = TRUE, foreign_keys = TRUE) {
   if (config) {
     
     # If json file has many database connection details, filter with argument
-    if (class(json) == "data.frame") {
+    if (inherits(json, "data.frame")) {
       json <- json[json[, "database_name"] == database, ]
     }
     

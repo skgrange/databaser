@@ -15,16 +15,13 @@
 #' @export
 db_get <- function(con, statement, warn = TRUE) {
   
+  # Get data
   if (warn) {
-    
     df <- DBI::dbGetQuery(con, statement)
-    
   } else {
-    
     df <- suppressWarnings(
       DBI::dbGetQuery(con, statement)
     )
-    
   }
   
   # Always a tibble

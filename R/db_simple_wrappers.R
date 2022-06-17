@@ -6,11 +6,15 @@
 #' 
 #' @param table Table to read. 
 #' 
+#' @param verbose Should the function print messages?
+#' 
 #' @return Tibble. 
 #' 
 #' @export
-db_read_table <- function(con, table) 
+db_read_table <- function(con, table, verbose = FALSE) {
+  if (verbose) message(threadr::date_message(), "Reading `", table, "`...")
   dplyr::as_tibble(DBI::dbReadTable(con, table))
+}
 
 
 #' Function to list all variables/columns/fields in a database table. 

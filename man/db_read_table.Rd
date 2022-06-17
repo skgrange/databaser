@@ -4,12 +4,14 @@
 \alias{db_read_table}
 \title{Function to read an entire database table.}
 \usage{
-db_read_table(con, table)
+db_read_table(con, table, verbose = FALSE)
 }
 \arguments{
 \item{con}{Database connection.}
 
 \item{table}{Table to read.}
+
+\item{verbose}{Should the function print messages?}
 }
 \value{
 Tibble.
