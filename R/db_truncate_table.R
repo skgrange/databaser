@@ -17,22 +17,23 @@
 #' 
 #' @export
 db_truncate_table <- function(con, table, cascade = FALSE) {
+  purrr::walk(table, ~db_truncate_table_worker(con, table = ., cascade = cascade))
+}
+
+
+db_truncate_table_worker <- function(con, table, cascade) {
   
+  # A switch for different database types
   if (db.class(con) == "sqlite") {
-    
     sql <- stringr::str_c("DELETE FROM ", table)
-    
   } else if (db.class(con) %in% c("mysql", "postgres")) {
-    
     sql <- stringr::str_c("TRUNCATE TABLE ", table)
-    
     if (cascade) sql <- stringr::str_c(sql, " CASCADE")
-    
   }
   
   # Do
   db_execute(con, sql)
   
-  # No return
+  return(invisible(con))
   
 }
