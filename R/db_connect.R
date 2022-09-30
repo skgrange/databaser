@@ -88,11 +88,11 @@ db_connect <- function(file, database, config = TRUE, foreign_keys = TRUE) {
     }
     
     # Create connection based on driver type
-    if (grepl("mysql", json$driver, ignore.case = TRUE)) {
+    if (grepl("mysql|maria", json$driver, ignore.case = TRUE)) {
       
       # Connect
       con <- DBI::dbConnect(
-        RMySQL::MySQL(), 
+        RMariaDB::MariaDB(), 
         host = json$host, 
         dbname = json$database_name,
         user = json$user, 

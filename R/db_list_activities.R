@@ -3,6 +3,7 @@
 #' \code{db_list_activities} supports PostgreSQL and MySQL databases at present. 
 #' 
 #' @param con Database connection. 
+#' 
 #' @param json Should the return be formatted as a JSON string? 
 #' 
 #' @author Stuart K. Grange
@@ -10,25 +11,19 @@
 #' @export
 db_list_activities <- function(con, json = FALSE) {
   
-  if (grepl("postgres", class(con)[1], ignore.case = TRUE)) {
-    
-    df <- suppressWarnings(
-      db_get(con, "SELECT * FROM pg_stat_activity")
-    )
-    
+  if (db.class(con) == "postgres") {
+    df <- suppressWarnings(db_get(con, "SELECT * FROM pg_stat_activity"))
+  } else if (db.class(con) %in% c("mysql", "maria")) {
+    df <- db_get(con, "SHOW FULL PROCESSLIST")
+  } else if (db.class(con) == "sqlite") {
+    stop("Not implemented.", call. = FALSE)
+  } else {
+    stop("Database not suported.", call. = FALSE)
   }
   
-  if (grepl("mysql", class(con), ignore.case = TRUE))
-    df <- db_get(con, "SHOW FULL PROCESSLIST")
-  
-  # Others
-  if (grepl("sqlite", class(con), ignore.case = TRUE))
-    stop("Not implemented.", call. = FALSE)
-  
-  # Make a json object
+  # Make a json object, not a useful name here
   if (json) df <- jsonlite::toJSON(df, pretty = TRUE)
   
-  # Return
-  df
+  return(df)
   
 }

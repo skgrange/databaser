@@ -10,25 +10,14 @@
 #' @export
 db_kill_process <- function(con, process) {
   
-  # Postgres
-  if (grepl("postgres", class(con), ignore.case = TRUE)) {
-    
-    # Build
+  if (db.class(con) == "postgres") {
     sql <- stringr::str_c("SELECT pg_cancel_backend(", process, ")")
-    
-    # Use
     db_execute(con, sql)
-    
-  }
-  
-  # MySQL
-  if (grepl("mysql", class(con), ignore.case = TRUE)) {
-    
+  } else if (db.class(con) %in% c("mysql", "maria")) {
     sql <- stringr::str_c("kill ", process)
     db_execute(con, sql)
-    
   }
   
-  # No return
+  return(invisible(con))
   
 }

@@ -29,18 +29,19 @@ db_vacuum <- function(con, table = NA, verbose = FALSE) {
   date_pre <- Sys.time()
   size_pre <- db_size(con)
   
-  if (verbose) 
-    message(threadr::str_date_formatted(date_pre), ": Vacuuming database...")
+  if (verbose) {
+    message(threadr::date_message(), "Vacuuming database...")
+  }
   
   if (db.class(con) == "postgres") {
     
-    # Defalt to all tables
+    # Default to all tables
     if (is.na(table[1])) table <- db_list_tables(con)
     
     # Do
     db_execute(con, stringr::str_c("VACUUM (VERBOSE) ", table))
     
-  } else if (db.class(con) == "mysql") {
+  } else if (db.class(con) %in% c("mysql", "maria")) {
     
     # Catch the reserved verbs
     table <- stringr::str_c("`", table, "`")
@@ -49,9 +50,7 @@ db_vacuum <- function(con, table = NA, verbose = FALSE) {
     db_execute(con, stringr::str_c("OPTIMIZE TABLE ", table))
     
   } else if (db.class(con) == "sqlite") {
-    
     db_execute(con, "VACUUM")
-    
   }
   
   # Get things post-vacuum

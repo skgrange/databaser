@@ -23,7 +23,7 @@ db_count_rows <- function(con, table = NA, estimate = FALSE, verbose = FALSE) {
   if (is.na(table[1])) table <- db_list_tables(con)
   
   # Check database
-  if (length(table) == 0) stop("Database has no tables...", call. = FALSE)
+  if (length(table) == 0) stop("Database has no tables.", call. = FALSE)
   
   # Do
   df <- purrr::map_dfr(
@@ -65,7 +65,7 @@ db_count_rows_worker <- function(con, table, estimate, verbose) {
     )
     
     # Do not use the cast function here
-    if (db.class(con) == "mysql") {
+    if (db.class(con) %in% c("mysql", "maria")) {
       sql <- str_c(
         "SELECT COUNT(*) AS row_count 
          FROM ", table

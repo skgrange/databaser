@@ -9,16 +9,16 @@
 #' @export
 db_version <- function(con) {
   
-  if (db.class(con) == "sqlite") 
+  if (db.class(con) == "sqlite") {
     x <- db_get(con, "SELECT sqlite_version()")[, 1]
-  
-  if (db.class(con) == "mysql") 
-    stop("Not implemented...", call. = FALSE)
-  
-  if (db.class(con) == "postgres")
-    x <- db_get(con, "SELECT version()")[, 1]
-  
-  # Return
-  x
+  } else if (db.class(con) %in% c("mysql", "maria")) {
+    stop("Not implemented.", call. = FALSE)
+  } else if (db.class(con) == "postgres") {
+    x <- db_get(con, "SELECT version()")[, 1, drop = TRUE]
+  } else {
+    stop("Database connection not supported.", call. = FALSE)
+  }
+    
+  return(x)
   
 }
