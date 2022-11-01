@@ -13,7 +13,7 @@ db_list_activities <- function(con, json = FALSE) {
   
   if (db.class(con) == "postgres") {
     df <- suppressWarnings(db_get(con, "SELECT * FROM pg_stat_activity"))
-  } else if (db.class(con) %in% c("mysql", "maria")) {
+  } else if (db.class(con) %in% c("mysql", "mariadb")) {
     df <- db_get(con, "SHOW FULL PROCESSLIST")
   } else if (db.class(con) == "sqlite") {
     stop("Not implemented.", call. = FALSE)

@@ -44,7 +44,9 @@ db_count_rows <- function(con, table = NA, estimate = FALSE, verbose = FALSE) {
 # Function to get the row counts
 db_count_rows_worker <- function(con, table, estimate, verbose) {
   
-  if (verbose) message(threadr::date_message(), "Counting rows in `", table, "`...")
+  if (verbose) {
+    message(threadr::date_message(), "Counting rows in `", table, "`...")
+  }
   
   if (estimate) {
     
@@ -65,7 +67,7 @@ db_count_rows_worker <- function(con, table, estimate, verbose) {
     )
     
     # Do not use the cast function here
-    if (db.class(con) %in% c("mysql", "maria")) {
+    if (db.class(con) %in% c("mysql", "mariadb")) {
       sql <- str_c(
         "SELECT COUNT(*) AS row_count 
          FROM ", table

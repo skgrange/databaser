@@ -29,6 +29,9 @@
 #' be enforced. Default is \code{TRUE}. For other database types, this will be 
 #' ignored. 
 #' 
+#' @param sslmode For PostgreSQL databases, what \code{sslmode} should be used 
+#' for the connection? 
+#' 
 #' @author Stuart K. Grange
 #' 
 #' @return Database connection. 
@@ -62,7 +65,8 @@
 #' }
 #' 
 #' @export
-db_connect <- function(file, database, config = TRUE, foreign_keys = TRUE) {
+db_connect <- function(file, database, config = TRUE, foreign_keys = TRUE,
+                       sslmode = NULL) {
   
   # Could use mime type
   # mime::guess_type(file)
@@ -88,7 +92,7 @@ db_connect <- function(file, database, config = TRUE, foreign_keys = TRUE) {
     }
     
     # Create connection based on driver type
-    if (grepl("mysql|maria", json$driver, ignore.case = TRUE)) {
+    if (grepl("mysql|mariadb", json$driver, ignore.case = TRUE)) {
       
       # Connect
       con <- DBI::dbConnect(
@@ -103,11 +107,12 @@ db_connect <- function(file, database, config = TRUE, foreign_keys = TRUE) {
       
       # Connect
       con <- DBI::dbConnect(
-        RPostgreSQL::PostgreSQL(), 
+        RPostgres::Postgres(), 
         host = json$host, 
         dbname = json$database_name,
         user = json$user, 
-        password = json$password
+        password = json$password,
+        sslmode = sslmode
       )
       
       # Also give application name
@@ -145,7 +150,7 @@ db_disconnect <- function(con) quiet(DBI::dbDisconnect(con))
 
 postgres_application_name <- function() {
   
-  # Get infomation
+  # Get information
   list_version <- R.Version()
   
   # Clean
@@ -154,7 +159,7 @@ postgres_application_name <- function() {
   version <- stringr::str_remove(version, "version ")
   
   # Add package name too
-  version <- stringr::str_c(version, " with RPostgreSQL")
+  version <- stringr::str_c(version, " with RPostgres")
   
   return(version)
   

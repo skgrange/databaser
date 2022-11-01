@@ -11,7 +11,7 @@ db_version <- function(con) {
   
   if (db.class(con) == "sqlite") {
     x <- db_get(con, "SELECT sqlite_version()")[, 1]
-  } else if (db.class(con) %in% c("mysql", "maria")) {
+  } else if (db.class(con) %in% c("mysql", "mariadb")) {
     stop("Not implemented.", call. = FALSE)
   } else if (db.class(con) == "postgres") {
     x <- db_get(con, "SELECT version()")[, 1, drop = TRUE]

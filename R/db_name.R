@@ -12,7 +12,7 @@ db_name <- function(con, extension = TRUE) {
   
   if (db.class(con) == "postgres") {
     x <- db_get(con, "SELECT CURRENT_DATABASE()")[, 1, drop = TRUE]
-  } else if (db.class(con) %in% c("mysql", "maria")) {
+  } else if (db.class(con) %in% c("mysql", "mariadb")) {
     x <- db_get(con, "SELECT DATABASE()")[, 1, drop = TRUE]
   } else if (db.class(con) == "sqlite") {
     # Get file name

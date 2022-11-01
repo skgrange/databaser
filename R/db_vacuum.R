@@ -41,7 +41,7 @@ db_vacuum <- function(con, table = NA, verbose = FALSE) {
     # Do
     db_execute(con, stringr::str_c("VACUUM (VERBOSE) ", table))
     
-  } else if (db.class(con) %in% c("mysql", "maria")) {
+  } else if (db.class(con) %in% c("mysql", "mariadb")) {
     
     # Catch the reserved verbs
     table <- stringr::str_c("`", table, "`")

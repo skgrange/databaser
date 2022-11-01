@@ -13,7 +13,7 @@ db_kill_process <- function(con, process) {
   if (db.class(con) == "postgres") {
     sql <- stringr::str_c("SELECT pg_cancel_backend(", process, ")")
     db_execute(con, sql)
-  } else if (db.class(con) %in% c("mysql", "maria")) {
+  } else if (db.class(con) %in% c("mysql", "mariadb")) {
     sql <- stringr::str_c("kill ", process)
     db_execute(con, sql)
   }

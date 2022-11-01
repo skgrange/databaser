@@ -19,8 +19,8 @@ db.class <- function(con) {
   # Switch, TODO, use case_when
   if (grepl("sqlite", class)) class_string <- "sqlite"
   if (grepl("mysql", class)) class_string <- "mysql"
-  if (grepl("maria", class)) class_string <- "maria"
-  if (grepl("postgres", class)) class_string <- "postgres"
+  if (grepl("maria", class)) class_string <- "mariadb"
+  if (grepl("postgres|pqconnection", class)) class_string <- "postgres"
   
   if (!exists("class_string")) stop("Unknown database service.", call. = FALSE)
   
