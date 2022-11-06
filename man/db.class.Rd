@@ -2,15 +2,18 @@
 % Please edit documentation in R/db.class.R
 \name{db.class}
 \alias{db.class}
+\alias{db_class}
 \title{Function to determine database connection class/type.}
 \usage{
 db.class(con)
+
+db_class(con)
 }
 \arguments{
 \item{con}{Database connection.}
 }
 \value{
-Character vector with a length of one.
+Character vector with a length of 1.
 }
 \description{
 \code{db.class} will return a lower-case string of database type which is 
@@ -18,5 +21,5 @@ suitable for logic testing similar to \code{\link{is.numeric}} or
 \code{\link{is.character}}.
 }
 \author{
-Stuart K. Grange
+Stuart K. Grange.
 }

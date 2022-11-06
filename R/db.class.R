@@ -4,27 +4,37 @@
 #' suitable for logic testing similar to \code{\link{is.numeric}} or 
 #' \code{\link{is.character}}. 
 #' 
-#' @author Stuart K. Grange
+#' @author Stuart K. Grange.
 #' 
 #' @param con Database connection. 
 #' 
-#' @return Character vector with a length of one. 
+#' @return Character vector with a length of 1.
 #' 
 #' @export
 db.class <- function(con) {
   
   # Get class
-  class <- stringr::str_to_lower(class(con)[1])
+  x <- stringr::str_to_lower(class(con)[1])
   
-  # Switch, TODO, use case_when
-  if (grepl("sqlite", class)) class_string <- "sqlite"
-  if (grepl("mysql", class)) class_string <- "mysql"
-  if (grepl("maria", class)) class_string <- "mariadb"
-  if (grepl("postgres|pqconnection", class)) class_string <- "postgres"
+  # Switch to lower case
+  x <- dplyr::case_when(
+    stringr::str_detect(x, "(?i)sqlite") ~ "sqlite",
+    stringr::str_detect(x, "(?i)mysql") ~ "mysql",
+    stringr::str_detect(x, "(?i)maria") ~ "mariadb",
+    stringr::str_detect(x, "(?i)postgres|pqconnection") ~ "postgres"
+  )
   
-  if (!exists("class_string")) stop("Unknown database service.", call. = FALSE)
+  # Stop if database service is unknown
+  if (is.na(x)) {
+    stop("Unknown database service.", call. = FALSE)
+  }
   
-  # Return
-  class_string
+  return(x)
     
 }
+
+
+# Create a more modern alias too
+#' @rdname db.class
+#' @export
+db_class <- db.class
