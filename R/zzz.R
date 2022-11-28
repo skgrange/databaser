@@ -5,7 +5,9 @@
 if (getRversion() >= "2.15.1") {
   
   # What variables are causing issues?
-  variables <- c(".", "table_name", "name", "type", "values", "row_count")
+  variables <- c(
+    ".", "table_name", "name", "type", "values", "row_count", "size"
+  )
   
   # Squash the notes
   utils::globalVariables(variables)

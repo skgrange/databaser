@@ -15,8 +15,9 @@ db_size(con, unit = "mb")
 Numeric vector.
 }
 \description{
-For SQLite databases, the file size is returned but for PostgreSQL databases,
-the `pg_database` table is queried.
+For SQLite databases, the file size is returned, for PostgreSQL databases,
+the `pg_database` table is queried, and for MySQL database 
+`information_schema.tables` is queried.
 }
 \author{
 Stuart K. Grange
