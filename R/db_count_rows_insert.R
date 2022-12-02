@@ -26,13 +26,10 @@ db_count_rows_insert <- function(con, table = "row_counts", estimate = FALSE,
   date_system <- as.numeric(lubridate::now())
   
   # Get all tables
-  tables_db <- databaser::db_list_tables(con)
-   
-  # # But do not do `row_counts` table
-  # tables_db <- setdiff(tables_db, table)
+  tables_db <- db_list_tables(con)
   
   # Get counts of all tables
-  df <- databaser::db_count_rows(
+  df <- db_count_rows(
     con, 
     table = tables_db, 
     estimate = estimate,
@@ -40,9 +37,8 @@ db_count_rows_insert <- function(con, table = "row_counts", estimate = FALSE,
   ) %>% 
     mutate(system = threadr::hostname(),
            date = date_system) %>% 
-    select(system,
-           date, 
-           everything())
+    relocate(system,
+             date)
   
   # Print current row counts
   if (print) {
@@ -53,7 +49,7 @@ db_count_rows_insert <- function(con, table = "row_counts", estimate = FALSE,
   
   # Insert into database
   if (verbose) message(threadr::date_message(), "Inserting row counts data...")
-  databaser::db_insert(con, table, df, replace = FALSE)
+  db_insert(con, table, df, replace = FALSE)
 
   return(invisible(con))
   
