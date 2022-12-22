@@ -11,11 +11,11 @@ build_insert_statements(table, df, squish = FALSE)
 
 \item{df}{Data frame to use to create statements.}
 
-\item{squish}{Should whitespace around commas and equal signs be removed to
+\item{squish}{Should white space around commas and equal signs be removed to
 make the SQL statement shorter?}
 }
 \value{
-Character vector with a length of nrow(df).
+Character vector with a length of \code{nrow(df)}.
 }
 \description{
 Function to build \code{INSERT INTO} SQL statements from a data frame.

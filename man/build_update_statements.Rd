@@ -2,7 +2,7 @@
 % Please edit documentation in R/build_update_statements.R
 \name{build_update_statements}
 \alias{build_update_statements}
-\title{Function to build SQL \code{WHERE} statements from an input data frame.}
+\title{Function to build SQL \code{UPDATE} statements from an input data frame.}
 \usage{
 build_update_statements(table, df, where = NA, squish = FALSE)
 }
@@ -14,14 +14,14 @@ build_update_statements(table, df, where = NA, squish = FALSE)
 \item{where}{Which variables in \code{df} to be used for the \code{WHERE} 
 clause. If not used, only a single row data frame can be used.}
 
-\item{squish}{Should whitespace around commas and equal signs be removed to
+\item{squish}{Should white space around commas and equal signs be removed to
 make the SQL statement shorter?}
 }
 \value{
 Character vector with a length of \code{nrow(df)}.
 }
 \description{
-Function to build SQL \code{WHERE} statements from an input data frame.
+Function to build SQL \code{UPDATE} statements from an input data frame.
 }
 \author{
 Stuart K. Grange

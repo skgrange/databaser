@@ -4,7 +4,7 @@
 \alias{db_execute}
 \title{Function to execute statements on a database.}
 \usage{
-db_execute(con, statement, ..., progress = "none")
+db_execute(con, statement, ..., progress = FALSE)
 }
 \arguments{
 \item{con}{Database connection.}

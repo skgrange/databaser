@@ -16,15 +16,15 @@
 #' @return Invisible \code{con}. 
 #' 
 #' @export
-db_execute <- function(con, statement, ..., progress = "none") {
+db_execute <- function(con, statement, ..., progress = FALSE) {
   
-  # A switch for logical input
-  if (is.logical(progress)) {
-    progress <- "time"
+  # A switch for old input
+  if (progress == "time") {
+    progress <- TRUE
   }
   
   # Do
-  plyr::l_ply(
+  purrr::walk(
     statement, 
     function(x) DBI::dbExecute(con, x, ...),
     .progress = progress

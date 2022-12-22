@@ -4,12 +4,12 @@
 #' 
 #' @param df Data frame to use to create statements. 
 #' 
-#' @param squish Should whitespace around commas and equal signs be removed to
+#' @param squish Should white space around commas and equal signs be removed to
 #' make the SQL statement shorter? 
 #' 
 #' @author Stuart K. Grange
 #' 
-#' @return Character vector with a length of nrow(df). 
+#' @return Character vector with a length of \code{nrow(df)}.
 #' 
 #' @export
 build_insert_statements <- function(table, df, squish = FALSE) {
@@ -33,7 +33,7 @@ build_insert_statements <- function(table, df, squish = FALSE) {
     pull() %>% 
     str_c(insert_into, .)
   
-  # Remove some whitespace to make statement smaller
+  # Remove some white space to make statement smaller
   if (squish) sql <- str_replace_all(sql, ", ", ",")
   
   return(sql)

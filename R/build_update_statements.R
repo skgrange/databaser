@@ -1,4 +1,4 @@
-#' Function to build SQL \code{WHERE} statements from an input data frame. 
+#' Function to build SQL \code{UPDATE} statements from an input data frame. 
 #' 
 #' @param table Database's table to update. 
 #' 
@@ -7,7 +7,7 @@
 #' @param where Which variables in \code{df} to be used for the \code{WHERE} 
 #' clause. If not used, only a single row data frame can be used. 
 #' 
-#' @param squish Should whitespace around commas and equal signs be removed to
+#' @param squish Should white space around commas and equal signs be removed to
 #' make the SQL statement shorter? 
 #' 
 #' @author Stuart K. Grange
@@ -24,7 +24,7 @@ build_update_statements <- function(table, df, where = NA, squish = FALSE) {
   if (nrow(df) == 0) return(as.character())
   
   if (is.na(where[1]) && nrow(df) != 1) {
-    stop("If `where` is not used, input must have a single row...", call. = FALSE)
+    stop("If `where` is not used, input must have a single row.", call. = FALSE)
   }
   
   # Build where clauses
@@ -48,7 +48,7 @@ build_update_statements <- function(table, df, where = NA, squish = FALSE) {
   # Add where clauses
   if (!is.na(where[1])) sql_update <- str_c(sql_update, sql_where)
   
-  # Remove some whitespace to make statement smaller
+  # Remove some white space to make statement smaller
   if (squish) {
     sql_update <- str_replace_all(sql_update, ", ", ",")
     sql_update <- str_replace_all(sql_update, " = ", "=")
