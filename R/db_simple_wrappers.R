@@ -79,3 +79,23 @@ db_table_exists <- function(con, table) {
     purrr::set_names(.) %>% 
     purrr::map_lgl(~DBI::dbExistsTable(con, .))
 }
+
+
+#' Function open a database transaction, perform operations, and commit the 
+#' results if a series of successful operations are performed. 
+#' 
+#' @param con Database connection.
+#' 
+#' @param code R code that interacts with \code{con}. 
+#' 
+#' @param ... Other parameters passed on to methods.
+#' 
+#' @return Invisible logical vector. 
+#'
+#' @seealso \code{\link{dbWithTransaction}}
+#' 
+#' @export
+db_with_transaction <- function(con, code, ...) {
+  DBI::dbWithTransaction(conn = con, code = code, ...) %>% 
+    invisible()
+}
