@@ -4,7 +4,7 @@
 
 ![](inst/extdata/images/icon_small.png)
 
-**databaser** is an R package which extends [**DBI**](https://github.com/rstats-db/DBI), [**RSQLite**](https://github.com/r-dbi/RSQLite), [**RMariaDB**](https://github.com/r-dbi/RMariaDB), and [**RPostgreSQL**](https://code.google.com/archive/p/rpostgresql/). **databaser**  keeps things consistent with functions starting with `db_`. **databaser** contains many simple wrappers which are sometimes undesirable, but they are included for consistency. 
+**databaser** is an R package which extends [**DBI**](https://github.com/rstats-db/DBI), [**RSQLite**](https://github.com/r-dbi/RSQLite), [**RMariaDB**](https://github.com/r-dbi/RMariaDB), and [**RPostgres**](https://rpostgres.r-dbi.org/). **databaser**  keeps things consistent with functions starting with `db_`. **databaser** contains many simple wrappers which are sometimes undesirable, but they are included for consistency. 
 
   - Functions include: 
   
@@ -19,7 +19,6 @@
     - `db_vacuum`
     - `db_read_table`
     - `db_insert`
-    - `db_use_sql`
     - `db_kill_process`
     - `db_list_constraints`
     - `db_list_indices` 
