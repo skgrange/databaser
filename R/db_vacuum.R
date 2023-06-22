@@ -25,13 +25,14 @@
 #' @export
 db_vacuum <- function(con, table = NA, verbose = FALSE) {
   
+  # Message to user
+  if (verbose) {
+    cli::cli_alert_info("{threadr::cli_date()} Vacuuming database...")
+  }
+  
   # Get things pre-vacuum
   date_pre <- Sys.time()
   size_pre <- db_size(con)
-  
-  if (verbose) {
-    message(threadr::date_message(), "Vacuuming database...")
-  }
   
   if (db.class(con) == "postgres") {
     

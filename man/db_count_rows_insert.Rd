@@ -35,5 +35,5 @@ Function to get row counts and insert into a database table.
 \code{\link{db_count_rows}}, \code{\link{db_details}}
 }
 \author{
-Stuart K. Grange.
+Stuart K. Grange
 }

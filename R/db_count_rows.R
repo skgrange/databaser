@@ -26,7 +26,7 @@ db_count_rows <- function(con, table = NA, estimate = FALSE, verbose = FALSE) {
   if (length(table) == 0) stop("Database has no tables.", call. = FALSE)
   
   # Do
-  df <- purrr::map_dfr(
+  df <- purrr::map(
     table, 
     ~db_count_rows_worker(
       con, 
@@ -34,7 +34,8 @@ db_count_rows <- function(con, table = NA, estimate = FALSE, verbose = FALSE) {
       estimate = estimate, 
       verbose = verbose
     )
-  )
+  ) %>% 
+    purrr::list_rbind()
   
   return(df)
   
@@ -44,8 +45,9 @@ db_count_rows <- function(con, table = NA, estimate = FALSE, verbose = FALSE) {
 # Function to get the row counts
 db_count_rows_worker <- function(con, table, estimate, verbose) {
   
+  # Message to user
   if (verbose) {
-    message(threadr::date_message(), "Counting rows in `", table, "`...")
+    cli::cli_alert_info("{threadr::cli_date()} Counting rows in `{table}`...")
   }
   
   if (estimate) {

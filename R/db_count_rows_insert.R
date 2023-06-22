@@ -14,7 +14,7 @@
 #' 
 #' @seealso \code{\link{db_count_rows}}, \code{\link{db_details}}
 #' 
-#' @author Stuart K. Grange.
+#' @author Stuart K. Grange
 #' 
 #' @return Invisible \code{con}. 
 #' 
@@ -48,7 +48,10 @@ db_count_rows_insert <- function(con, table = "row_counts", estimate = FALSE,
   }
   
   # Insert into database
-  if (verbose) message(threadr::date_message(), "Inserting row counts data...")
+  if (verbose) {
+    cli::cli_alert_info("{threadr::cli_date()} Inserting row counts data...")
+  }
+  
   db_insert(con, table, df, replace = FALSE)
 
   return(invisible(con))

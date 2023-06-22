@@ -12,7 +12,7 @@
 #' 
 #' @export
 db_read_table <- function(con, table, verbose = FALSE) {
-  if (verbose) message(threadr::date_message(), "Reading `", table, "`...")
+  if (verbose) cli::cli_alert_info("{threadr::cli_date()} Reading `{table}`...")
   dplyr::as_tibble(DBI::dbReadTable(con, table))
 }
 
