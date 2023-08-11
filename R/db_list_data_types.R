@@ -52,26 +52,17 @@ db_list_data_types <- function(con, table = NA) {
   } else if (db.class(con) == "sqlite") {
     
     if (is.na(table[1])) {
-      
       # Get table vector
       table <- db_list_tables(con)
-      
     } 
     
     # Do for all tables
-    df <- plyr::ldply(
-      table, 
-      function(x) 
-        db_list_data_types_sql_lite_worker(
-          con,
-          x
-        )
-    )
+    df <- table %>% 
+      purrr::map(~db_list_data_types_sql_lite_worker(con, .)) %>% 
+      purrr::list_rbind()
     
   } else {
-    
     stop("Not implemented.", call. = FALSE)
-    
   }
   
   return(df)

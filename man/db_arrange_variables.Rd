@@ -2,8 +2,8 @@
 % Please edit documentation in R/db_arrange_variables.R
 \name{db_arrange_variables}
 \alias{db_arrange_variables}
-\title{Function to arrange variables in a data frame to match those found in a 
-database table.}
+\title{Function to arrange variables in a data frame/tibble to match those found in 
+a database table.}
 \usage{
 db_arrange_variables(con, table, df)
 }
@@ -12,11 +12,13 @@ db_arrange_variables(con, table, df)
 
 \item{table}{Table name in database.}
 
-\item{df}{Data frame.}
+\item{df}{Data frame/tibble.}
+}
+\value{
+\code{df}, possibly with rearranged and/or additional variables.
 }
 \description{
-\code{db_arrange_variables} is useful for preparing data for insert and when
-look-up tables are being created.
+\code{db_arrange_variables} is useful for preparing data for insert.
 }
 \author{
 Stuart K. Grange
