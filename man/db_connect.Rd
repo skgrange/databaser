@@ -4,7 +4,14 @@
 \alias{db_connect}
 \title{Function to create a database connection with a \code{JSON} configuration file.}
 \usage{
-db_connect(file, database, config = TRUE, foreign_keys = TRUE, sslmode = NULL)
+db_connect(
+  file,
+  database,
+  config = TRUE,
+  foreign_keys = TRUE,
+  sslmode = NULL,
+  bigint = "integer64"
+)
 }
 \arguments{
 \item{file}{\code{JSON} file or string containing database connection 
@@ -24,6 +31,9 @@ ignored.}
 
 \item{sslmode}{For PostgreSQL databases, what \code{sslmode} should be used 
 for the connection?}
+
+\item{bigint}{For 64-bit integers, how should these be handled? See 
+\code{\link{dbConnect}} for details.}
 }
 \value{
 Database connection.

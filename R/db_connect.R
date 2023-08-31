@@ -32,6 +32,9 @@
 #' @param sslmode For PostgreSQL databases, what \code{sslmode} should be used 
 #' for the connection? 
 #' 
+#' @param bigint For 64-bit integers, how should these be handled? See 
+#' \code{\link{dbConnect}} for details. 
+#' 
 #' @author Stuart K. Grange
 #' 
 #' @return Database connection. 
@@ -66,7 +69,7 @@
 #' 
 #' @export
 db_connect <- function(file, database, config = TRUE, foreign_keys = TRUE,
-                       sslmode = NULL) {
+                       sslmode = NULL, bigint = "integer64") {
   
   # Could use mime type
   # mime::guess_type(file)
@@ -100,7 +103,8 @@ db_connect <- function(file, database, config = TRUE, foreign_keys = TRUE,
         host = json$host, 
         dbname = json$database_name,
         user = json$user, 
-        password = json$password
+        password = json$password,
+        bigint = bigint
       )
       
     } else if (grepl("postg", json$driver, ignore.case = TRUE)) {
@@ -112,7 +116,8 @@ db_connect <- function(file, database, config = TRUE, foreign_keys = TRUE,
         dbname = json$database_name,
         user = json$user, 
         password = json$password,
-        sslmode = sslmode
+        sslmode = sslmode,
+        bigint = bigint
       )
       
       # Also give application name
