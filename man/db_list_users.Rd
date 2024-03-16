@@ -10,7 +10,7 @@ db_list_users(con)
 \item{con}{Database connection.}
 }
 \value{
-Data frame.
+Tibble.
 }
 \description{
 Function to list users for a database.
@@ -18,7 +18,7 @@ Function to list users for a database.
 \examples{
 \dontrun{
 
-# Get users
+# Get the database's users
 db_list_users(con)
 
 }

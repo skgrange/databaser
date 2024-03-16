@@ -88,31 +88,42 @@ db_connect <- function(file, database, config = TRUE, foreign_keys = TRUE,
   }
   
   if (config) {
-    
     # If json file has many database connection details, filter with argument
     if (inherits(json, "data.frame")) {
       json <- json[json[, "database_name"] == database, ]
     }
     
     # Create connection based on driver type
-    if (grepl("mysql|mariadb", json$driver, ignore.case = TRUE)) {
+    if (stringr::str_detect(json$driver, "(?i)mysql|mariadb")) {
+      
+      # Add a port if it does not exist
+      if (!"port" %in% names(json)) {
+        json$port <- 0L
+      }
       
       # Connect
       con <- DBI::dbConnect(
         RMariaDB::MariaDB(), 
         host = json$host, 
+        port = json$host,
         dbname = json$database_name,
         user = json$user, 
         password = json$password,
         bigint = bigint
       )
       
-    } else if (grepl("postg", json$driver, ignore.case = TRUE)) {
+    } else if (stringr::str_detect(json$driver, "(?i)postg")) {
+      
+      # Add a port if it does not exist
+      if (!"port" %in% names(json)) {
+        json$port <- NULL
+      }
       
       # Connect
       con <- DBI::dbConnect(
         RPostgres::Postgres(), 
         host = json$host, 
+        port = json$port,
         dbname = json$database_name,
         user = json$user, 
         password = json$password,
@@ -120,7 +131,7 @@ db_connect <- function(file, database, config = TRUE, foreign_keys = TRUE,
         bigint = bigint
       )
       
-      # Also give application name
+      # Also set the application name
       db_execute(con, stringr::str_c(
         "SET application_name = '", 
         postgres_application_name(), "'")

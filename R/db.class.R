@@ -34,7 +34,7 @@ db.class <- function(con) {
 }
 
 
-# Create a more modern alias too
+# Create an alias too
 #' @rdname db.class
 #' @export
 db_class <- db.class
