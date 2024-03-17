@@ -23,7 +23,7 @@ db_count_rows_insert <- function(con, table = "row_counts", estimate = FALSE,
                                  print = FALSE, verbose = FALSE) {
   
   # Get start date
-  date_system <- as.numeric(lubridate::now())
+  date_system <- as.numeric(lubridate::floor_date(lubridate::now(), "second"))
   
   # Get all tables
   tables_db <- db_list_tables(con)

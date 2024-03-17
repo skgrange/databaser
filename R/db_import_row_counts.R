@@ -13,16 +13,17 @@
 #' @export
 db_import_row_counts <- function(con, tz = "UTC") {
   
+  # Check if the table exists
   stopifnot(db_table_exists(con, "row_counts"))
   
   db_get(
     con, 
     "SELECT * 
-    FROM row_counts
-    ORDER BY date,
-    'table'"
+    FROM row_counts"
   ) %>% 
-    mutate(date = threadr::parse_unix_time(date, tz = tz))
+    mutate(date = threadr::parse_unix_time(date, tz = tz)) %>% 
+    arrange(date,
+            table)
   
 }
 
@@ -31,6 +32,7 @@ db_import_row_counts <- function(con, tz = "UTC") {
 #' @export
 db_import_database_details <- function(con, tz = "UTC") {
   
+  # Check if the table exists
   stopifnot(db_table_exists(con, "database_details"))
   
   db_get(

@@ -17,7 +17,7 @@
 #' @export
 db_details <- function(con) {
   
-  # Used twice
+  # Get table vector, this is used multiple times
   tables <- db_list_tables(con)
   
   # Build tibble
@@ -64,7 +64,14 @@ db_details_insert <- function(con, table = "database_details", print = FALSE) {
   
   # Read and print table after insert
   if (print) {
-    db_read_table(con, table) %>% 
+    con %>% 
+      db_get(
+        stringr::str_glue(
+          "SELECT * 
+          FROM {table}
+          ORDER BY date"
+        )
+      ) %>% 
       print(n = Inf)
   }
   
