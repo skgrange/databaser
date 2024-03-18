@@ -105,7 +105,7 @@ db_connect <- function(file, database, config = TRUE, foreign_keys = TRUE,
       con <- DBI::dbConnect(
         RMariaDB::MariaDB(), 
         host = json$host, 
-        port = json$host,
+        port = json$port,
         dbname = json$database_name,
         user = json$user, 
         password = json$password,
