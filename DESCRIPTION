@@ -1,7 +1,7 @@
 Package: databaser
 Type: Package
 Title: Tools to Keep Database Interaction Easy and Consistent
-Version: 0.3.017
+Version: 0.3.018
 Date: 2024-04-01
 Authors@R: person("Stuart K.", "Grange", email = "s.k.grange@gmail.com", 
     role = c("cre", "aut"), comment = c(ORCID = "0000-0003-4093-3596"))
