@@ -4,12 +4,15 @@
 \alias{db_list_activities}
 \title{Function to list activities/processes for a database.}
 \usage{
-db_list_activities(con, json = FALSE)
+db_list_activities(con, only_con = FALSE, as_json = FALSE)
 }
 \arguments{
 \item{con}{Database connection.}
 
-\item{json}{Should the return be formatted as a JSON string?}
+\item{only_con}{Filter activities only to the database where \code{con} has 
+been made.}
+
+\item{as_json}{Should the return be formatted as a JSON string?}
 }
 \description{
 \code{db_list_activities} supports PostgreSQL and MySQL databases at present.
