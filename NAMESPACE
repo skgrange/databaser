@@ -3,6 +3,7 @@
 export("%>%")
 export(build_insert_statements)
 export(build_update_statements)
+export(cli_db_connection)
 export(db.class)
 export(db_analyse)
 export(db_arrange_variables)

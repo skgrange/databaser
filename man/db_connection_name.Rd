@@ -2,19 +2,22 @@
 % Please edit documentation in R/db_connection_name.R
 \name{db_connection_name}
 \alias{db_connection_name}
-\title{Function to get a database connection string/name that is suitable for 
+\alias{cli_db_connection}
+\title{Functions to get a database connection strings/names that are suitable for 
 printing.}
 \usage{
 db_connection_name(con)
+
+cli_db_connection(con)
 }
 \arguments{
 \item{con}{A database connection.}
 }
 \value{
-A \strong{glue} character vector with length of \code{1}.
+A character or \strong{glue} character vector with length of \code{1}.
 }
 \description{
-Function to get a database connection string/name that is suitable for 
+Functions to get a database connection strings/names that are suitable for 
 printing.
 }
 \author{
