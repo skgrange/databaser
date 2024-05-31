@@ -4,15 +4,18 @@
 \alias{db_size}
 \title{Function to get the size of a database.}
 \usage{
-db_size(con, unit = "mb")
+db_size(con, unit = "mb", as_fs_bytes = FALSE)
 }
 \arguments{
 \item{con}{Database connection.}
 
 \item{unit}{Measurement unit. Default is \code{"mb"} for megabytes.}
+
+\item{as_fs_bytes}{Should the return be of the \code{fs_bytes} data type? If
+this argument is used, \code{unit} is not used.}
 }
 \value{
-Numeric vector.
+Numeric or \code{fs_bytes} vector with a length of \code{1}.
 }
 \description{
 For SQLite databases, the file size is returned, for PostgreSQL databases,

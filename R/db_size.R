@@ -10,22 +10,23 @@
 #' 
 #' @param unit Measurement unit. Default is \code{"mb"} for megabytes. 
 #' 
-#' @return Numeric vector. 
+#' @param as_fs_bytes Should the return be of the \code{fs_bytes} data type? If
+#' this argument is used, \code{unit} is not used. 
+#' 
+#' @return Numeric or \code{fs_bytes} vector with a length of \code{1}. 
 #' 
 #' @export
-db_size <- function(con, unit = "mb") {
+db_size <- function(con, unit = "mb", as_fs_bytes = FALSE) {
   
-  # Parse
+  # Parse input
   unit <- stringr::str_to_lower(unit)
   
   # Get database's class
-  db_class <- db.class(con)
+  db_class <- db_class(con)
   
   if (db_class == "sqlite") {
-    
     # Just get file size
     x <- threadr::file_size(con@dbname, unit = "none")
-    
   } else if (db_class == "postgres") {
     
     # Build query, requires database's name
@@ -51,14 +52,22 @@ db_size <- function(con, unit = "mb") {
     x <- pull(db_get(con, sql), size)
     
   } else {
-    stop("Not implemented", call. = FALSE)
+    cli::cli_abort("Database not supported.")
   }
   
-  # Convert unit
-  if (unit == "mb") x <- x / 1e+06
-  if (unit == "gb") x <- x / 1e+09
+  # Format return
+  if (as_fs_bytes) {
+    # Change data type
+    x <- fs::as_fs_bytes(x)
+  } else {
+    # Convert units
+    x <- dplyr::case_when(
+      unit == "mb" ~ x / 1e6,
+      unit == "gb" ~ x / 1e9,
+      .default = x
+    )
+  }
   
-  # Return
   return(x)
   
 }
