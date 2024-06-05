@@ -6,19 +6,17 @@
 #' 
 #' @export
 db_list_indices <- function(con) {
-
-  if (db.class(con) == "sqlite") {
-    
-    df <- purrr::map_dfr(db_list_tables(con), ~db_list_indices_worker(con, .x))
-    
-  } else if (db.class(con) == "postgres") {
-    
+  
+  if (db_class(con) == "sqlite") {
+    df <- db_list_tables(con) %>% 
+      purrr::map(~db_list_indices_worker(con, .x)) %>% 
+      purrr::list_rbind()
+  } else if (db_class(con) == "postgres") {
     df <- db_get(con, "SELECT * FROM pg_indexes")
-    
+  } else if (db_class(con) %in% c("mysql", "mariadb")) {
+    df <- db_get(con, "SELECT * FROM information_schema.statistics")
   } else {
-    
-    stop("Database not supported...", call. = FALSE)
-    
+    cli::cli_abort("Database not supported.")
   }
     
   return(df)
