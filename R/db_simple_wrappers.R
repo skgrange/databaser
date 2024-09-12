@@ -28,7 +28,9 @@ db_read_table <- function(con, table, verbose = FALSE) {
 #' @return Character vector. 
 #' 
 #' @export
-db_list_variables <- function(con, table) DBI::dbListFields(con, table)
+db_list_variables <- function(con, table) {
+  DBI::dbListFields(con, table)
+}
 
 
 #' Function to list results for a database connection. 
@@ -36,7 +38,9 @@ db_list_variables <- function(con, table) DBI::dbListFields(con, table)
 #' @param con Database connection. 
 #' 
 #' @export
-db_list_results <- function(con) DBI::dbListResults(con)[[1]]
+db_list_results <- function(con) {
+  DBI::dbListResults(con)[[1]]
+}
 
 
 #' Function to clear results for a database connection. 
@@ -44,7 +48,9 @@ db_list_results <- function(con) DBI::dbListResults(con)[[1]]
 #' @param con Database connection.
 #' 
 #' @export
-db_clear_results <- function(con) DBI::dbClearResult(db_list_results(con))
+db_clear_results <- function(con) {
+  DBI::dbClearResult(db_list_results(con))
+}
 
 
 #' Function to commit transactions for a database connection. 
@@ -52,17 +58,38 @@ db_clear_results <- function(con) DBI::dbClearResult(db_list_results(con))
 #' @param con Database connection.
 #' 
 #' @export
-db_commit <- function(con) DBI::dbCommit(con)
+db_commit <- function(con) {
+  DBI::dbCommit(con)
+}
 
 
 #' Function to list database tables.
 #' 
 #' @param con Database connection.
 #' 
+#' @param base_only For SQL Server, should only the base tables be returned? If 
+#' not, a larger number of system tables may be returned.
+#' 
 #' @return Character vector. 
 #' 
 #' @export
-db_list_tables <- function(con) DBI::dbListTables(con)
+db_list_tables <- function(con, base_only = TRUE) {
+  
+  if (base_only && db_class(con) == "sql_server") {
+    x <- db_get(
+      con, 
+      "SELECT TABLE_NAME
+      FROM INFORMATION_SCHEMA.TABLES
+      WHERE TABLE_TYPE = 'BASE TABLE'"
+    ) %>% 
+      pull()
+  } else {
+    x <- DBI::dbListTables(con)
+  }
+  
+  return(x)
+  
+}
 
 
 #' Function to test if database contains a table.

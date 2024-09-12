@@ -4,10 +4,13 @@
 \alias{db_list_tables}
 \title{Function to list database tables.}
 \usage{
-db_list_tables(con)
+db_list_tables(con, base_only = TRUE)
 }
 \arguments{
 \item{con}{Database connection.}
+
+\item{base_only}{For SQL Server, should only the base tables be returned? If 
+not, a larger number of system tables may be returned.}
 }
 \value{
 Character vector.
