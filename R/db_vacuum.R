@@ -12,7 +12,7 @@
 #' 
 #' @param verbose Should the function give messages? 
 #' 
-#' @return Invisible data frame.
+#' @return Invisible tibble. 
 #' 
 #' @examples 
 #' \dontrun{
@@ -30,19 +30,24 @@ db_vacuum <- function(con, table = NA, verbose = FALSE) {
     cli::cli_alert_info("{threadr::cli_date()} Vacuuming database...")
   }
   
+  # Used for logic
+  db_class <- db_class(con)
+  
   # Get things pre-vacuum
   date_pre <- Sys.time()
   size_pre <- db_size(con)
   
-  if (db.class(con) == "postgres") {
+  if (db_class == "postgres") {
     
     # Default to all tables
-    if (is.na(table[1])) table <- db_list_tables(con)
+    if (is.na(table[1])) {
+      table <- db_list_tables(con)
+    }
     
     # Do
     db_execute(con, stringr::str_c("VACUUM (VERBOSE) ", table))
     
-  } else if (db.class(con) %in% c("mysql", "mariadb")) {
+  } else if (db_class %in% c("mysql", "mariadb")) {
     
     # Catch the reserved verbs
     table <- stringr::str_c("`", table, "`")
@@ -50,14 +55,25 @@ db_vacuum <- function(con, table = NA, verbose = FALSE) {
     # Optimise
     db_execute(con, stringr::str_c("OPTIMIZE TABLE ", table))
     
-  } else if (db.class(con) == "sqlite") {
+  } else if (db_class == "sql_server") {
+    
+    # Default to all tables
+    if (is.na(table[1])) {
+      table <- db_list_tables(con)
+    }
+    
+    # A rough equivalent to vacuum
+    db_execute(con, stringr::str_glue("UPDATE STATISTICS {table}"))
+    
+  } else if (db_class == "sqlite") {
     db_execute(con, "VACUUM")
   }
   
   # Get things post-vacuum
   date_post <- Sys.time()
   size_post <- db_size(con)
-    
+  
+  # Build tibble return
   df <- tibble(
     when = c("pre_vacuum", "post_vacuum"),
     date = c(date_pre, date_post),

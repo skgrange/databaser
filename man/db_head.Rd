@@ -13,6 +13,9 @@ db_head(con, table, n = 5)
 
 \item{n}{Number of rows to read. Default is 5.}
 }
+\value{
+Tibble
+}
 \description{
 Function to get first \emph{n} rows of a database table.
 }

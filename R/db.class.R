@@ -21,7 +21,8 @@ db.class <- function(con) {
     stringr::str_detect(x, "(?i)sqlite") ~ "sqlite",
     stringr::str_detect(x, "(?i)mysql") ~ "mysql",
     stringr::str_detect(x, "(?i)maria") ~ "mariadb",
-    stringr::str_detect(x, "(?i)postgres|pqconnection") ~ "postgres"
+    stringr::str_detect(x, "(?i)postgres|pqconnection") ~ "postgres",
+    stringr::str_detect(x, "(?i)SQL Server") ~ "sql_server"
   )
   
   # Stop if database service is unknown

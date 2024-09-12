@@ -17,7 +17,7 @@ db_optimise(con, table = NA, verbose = FALSE)
 \item{verbose}{Should the function give messages?}
 }
 \value{
-Invisible data frame.
+Invisible tibble.
 }
 \description{
 The PostgreSQL statement uses \code{VACUUM (VERBOSE)}, the MySQL statement

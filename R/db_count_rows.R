@@ -20,10 +20,14 @@
 db_count_rows <- function(con, table = NA, estimate = FALSE, verbose = FALSE) {
   
   # If no table is selected, do them all
-  if (is.na(table[1])) table <- db_list_tables(con)
+  if (is.na(table[1])) {
+    table <- db_list_tables(con)
+  }
   
   # Check database
-  if (length(table) == 0) stop("Database has no tables.", call. = FALSE)
+  if (length(table) == 0) {
+    cli::cli_abort("The database has no tables.")
+  }
   
   # Do
   df <- purrr::map(
@@ -69,7 +73,7 @@ db_count_rows_worker <- function(con, table, estimate, verbose) {
     )
     
     # Do not use the cast function here
-    if (db.class(con) %in% c("mysql", "mariadb")) {
+    if (db.class(con) %in% c("mysql", "mariadb", "sql_server")) {
       sql <- str_c(
         "SELECT COUNT(*) AS row_count 
          FROM ", table

@@ -51,6 +51,16 @@ db_size <- function(con, unit = "mb", as_fs_bytes = FALSE) {
     # Query database
     x <- pull(db_get(con, sql), size)
     
+  } else if (db_class == "sql_server") {
+    
+    # A non-standard function and requires filtering to the database name, fs 
+    # function will pass the units correctly
+    x <- db_get(con, "exec sp_spaceused") %>% 
+      filter(database_name == !!db_name(con)) %>% 
+      pull(database_size) %>% 
+      fs::as_fs_bytes() %>% 
+      as.numeric()
+    
   } else {
     cli::cli_abort("Database not supported.")
   }

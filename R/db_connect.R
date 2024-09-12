@@ -137,6 +137,30 @@ db_connect <- function(file, database, config = TRUE, foreign_keys = TRUE,
         postgres_application_name(), "'")
       )
       
+    } else if (stringr::str_detect(json$driver, "(?i)sql server")) {
+      
+      # Add a port if it does not exist
+      if (!"port" %in% names(json)) {
+        json$port <- NULL
+      }
+      
+      # Drop Microsoft from driver name if required
+      json$driver <- json$driver %>% 
+        stringr::str_remove("(?i)microsoft") %>% 
+        stringr::str_squish()
+      
+      # Make connection to MS SQL Server database
+      con <- DBI::dbConnect(
+        odbc::odbc(),
+        driver = json$driver,
+        server = json$host,
+        database = json$database_name,
+        uid = json$user,
+        pwd = json$password,
+        port = json$port,
+        bigint = bigint
+      )
+      
     }
     
   } else {
