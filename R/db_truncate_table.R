@@ -9,29 +9,55 @@
 #' 
 #' @param table Table to remove all data from. 
 #' 
+#' @param verbose Should the function give messages? 
+#' 
+#' @param progress Should a progress bar be displayed? 
+#' 
 #' @param cascade Should the \code{TRUNCATE} statement be used with 
 #' \code{CASCADE}? Using \code{cascade} will delete relations which are 
 #' dependent on \code{table}. 
 #' 
-#' @return Invisible. 
+#' @return Invisible \code{con}.
 #' 
 #' @export
-db_truncate_table <- function(con, table, cascade = FALSE) {
-  purrr::walk(table, ~db_truncate_table_worker(con, table = ., cascade = cascade))
+db_truncate_table <- function(con, table, cascade = FALSE, verbose = FALSE, 
+                              progress = FALSE) {
+  
+  # Get database class
+  db_class <- db_class(con)
+  
+  # Truncate n tables
+  purrr::walk(
+    table, 
+    ~db_truncate_table_worker(
+      con, db_class = db_class, table = ., cascade = cascade, verbose = verbose
+    ),
+    .progress = progress
+  )
+  
 }
 
 
-db_truncate_table_worker <- function(con, table, cascade) {
+db_truncate_table_worker <- function(con, db_class, table, cascade, verbose) {
   
-  # A switch for different database types
-  if (db.class(con) == "sqlite") {
-    sql <- stringr::str_c("DELETE FROM ", table)
-  } else if (db.class(con) %in% c("mysql", "postgres")) {
-    sql <- stringr::str_c("TRUNCATE TABLE ", table)
-    if (cascade) sql <- stringr::str_c(sql, " CASCADE")
+  # Message to user
+  if (verbose) {
+    cli::cli_alert_info("{threadr::cli_date()} Truncating the `{table}` table...")
   }
   
-  # Do
+  # A switch for different database types
+  if (db_class == "sqlite") {
+    sql <- stringr::str_c("DELETE FROM ", table)
+  } else if (db_class %in% c("mysql", "postgres", "sql_server")) {
+    sql <- stringr::str_c("TRUNCATE TABLE ", table)
+    if (cascade) {
+      sql <- stringr::str_c(sql, " CASCADE")
+    }
+  } else {
+    cli::cli_abort("Database not supported.")
+  }
+  
+  # Truncate table
   db_execute(con, sql)
   
   return(invisible(con))
