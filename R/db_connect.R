@@ -29,12 +29,6 @@
 #' be enforced. Default is \code{TRUE}. For other database types, this will be 
 #' ignored. 
 #' 
-#' @param sslmode For PostgreSQL databases, what \code{sslmode} should be used 
-#' for the connection? 
-#' 
-#' @param bigint For 64-bit integers, how should these be handled? See 
-#' \code{\link{dbConnect}} for details. 
-#' 
 #' @author Stuart K. Grange
 #' 
 #' @return Database connection. 
@@ -68,8 +62,7 @@
 #' }
 #' 
 #' @export
-db_connect <- function(file, database, config = TRUE, foreign_keys = TRUE,
-                       sslmode = NULL, bigint = "integer64") {
+db_connect <- function(file, database, config = TRUE, foreign_keys = TRUE) {
   
   # Could use mime type
   # mime::guess_type(file)
@@ -109,7 +102,7 @@ db_connect <- function(file, database, config = TRUE, foreign_keys = TRUE,
         dbname = json$database_name,
         user = json$user, 
         password = json$password,
-        bigint = bigint
+        bigint = json$bigint
       )
       
     } else if (stringr::str_detect(json$driver, "(?i)postg")) {
@@ -117,6 +110,15 @@ db_connect <- function(file, database, config = TRUE, foreign_keys = TRUE,
       # Add a port if it does not exist
       if (!"port" %in% names(json)) {
         json$port <- NULL
+      }
+      
+      # Add a bigint default it does not exist
+      if (!"bigint" %in% names(json)) {
+        json$bigint <- "integer64"
+      }
+      
+      if (!"sslmode" %in% names(json)) {
+        json$sslmode <- "prefer"
       }
       
       # Connect
@@ -127,14 +129,16 @@ db_connect <- function(file, database, config = TRUE, foreign_keys = TRUE,
         dbname = json$database_name,
         user = json$user, 
         password = json$password,
-        sslmode = sslmode,
-        bigint = bigint
+        sslmode = json$sslmode,
+        bigint = json$bigint
       )
       
       # Also set the application name
-      db_execute(con, stringr::str_c(
-        "SET application_name = '", 
-        postgres_application_name(), "'")
+      db_execute(
+        con, 
+        stringr::str_glue(
+          "SET application_name = '{postgres_application_name()}'"
+        )
       )
       
     } else if (stringr::str_detect(json$driver, "(?i)sql server")) {
@@ -158,18 +162,20 @@ db_connect <- function(file, database, config = TRUE, foreign_keys = TRUE,
         uid = json$user,
         pwd = json$password,
         port = json$port,
-        bigint = bigint
+        bigint = json$bigint
       )
       
     }
     
   } else {
     
-    # sqlite databases, only need a path
+    # Sqlite databases, only need a path
     con <- DBI::dbConnect(RSQLite::SQLite(), file)
     
     # Add support for foreign keys
-    if (foreign_keys) db_execute(con, "PRAGMA foreign_keys = 1")
+    if (foreign_keys) {
+      db_execute(con, "PRAGMA foreign_keys = 1")
+    }
     
   }
   
