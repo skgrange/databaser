@@ -29,6 +29,8 @@
 #' be enforced. Default is \code{TRUE}. For other database types, this will be 
 #' ignored. 
 #' 
+#' @param sslmode,bigint Deprecated arguments that will be ignored.
+#' 
 #' @author Stuart K. Grange
 #' 
 #' @return Database connection. 
@@ -62,7 +64,8 @@
 #' }
 #' 
 #' @export
-db_connect <- function(file, database, config = TRUE, foreign_keys = TRUE) {
+db_connect <- function(file, database, config = TRUE, foreign_keys = TRUE,
+                       sslmode = NULL, bigint = "integer64") {
   
   # Could use mime type
   # mime::guess_type(file)
